@@ -6,5 +6,5 @@ from pathlib import Path
 PROJECT_DIR = str(Path(__file__).resolve().parents[3])
 RAW_DATA_PATH = PROJECT_DIR + '/data/raw'
 EXTRACTED_DATA_PATH = PROJECT_DIR + '/data/extracted'
+LOG_DATA_PATH = PROJECT_DIR + '/data/extracted/log'
 PROCESSED_DATA_PATH = PROJECT_DIR + '/data/processed'
-
