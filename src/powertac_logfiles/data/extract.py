@@ -5,7 +5,6 @@ from powertac_logfiles import data
 def extract_tarfile(file_name):
     file_name = data.RAW_DATA_PATH + '/' + file_name
     try:
-        print('Extract: {}\n'.format(file_name))
         with tarfile.open(file_name) as tar:
 
             # collect all log-files from subdir 'log of tar file'
