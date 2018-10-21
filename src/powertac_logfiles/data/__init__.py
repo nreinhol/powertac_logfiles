@@ -11,4 +11,4 @@ LOG_DATA_PATH = PROJECT_DIR + '/data/extracted/log'
 PROCESSED_DATA_PATH = PROJECT_DIR + '/data/processed'
 
 # Path to powertac log-tool pom, needs to adjusted
-LOGTOOL_PATH = '/home/niklas/git_repos/power_tac/powertac-tools/logtool-examples'
+LOGTOOL_PATH = PROJECT_DIR + '/powertac-tools/logtool-examples'

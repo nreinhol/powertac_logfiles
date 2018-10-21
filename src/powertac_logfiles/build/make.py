@@ -10,7 +10,7 @@ def make_log_files():
         file_name_ = b.FILE_NAME_ + str(game_number) + b.FILE_TYPE
         url = b.URL + file_name_
 
-        print('\n______Start processing______ \nTarget: {}'.format(url))
+        print('\n>>>>>>Start processing<<<<<< \nTarget: {}'.format(url))
 
         # Get and prepare state / trace file
         data.get_file_from_url(url, file_name_)
@@ -24,7 +24,7 @@ def make_log_files():
             b.call_logtool(mvn_cmd)
 
         # Clean file dirs
-        print('\n Cleaning data dirs')
+        print('\nCleaning data')
         b.delete_extracted_files()
         b.delete_tarfiles()
         print('Cleaning successful!')
