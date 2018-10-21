@@ -23,7 +23,7 @@ def make_log_files():
         data.extract_tarfile(file_name_)
 
         # Extract log-files
-        for key, value in tqdm(b.LOG_FILES.items(), desc='create log-files'):
+        for key, value in tqdm(b.LOG_FILES.items(), desc='create log-files', ncols=65):
             mvn_cmd = b.create_mvn_command(key, value, str(game_number))
             b.call_logtool(mvn_cmd)
 
