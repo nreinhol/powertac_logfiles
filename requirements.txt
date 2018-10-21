@@ -11,6 +11,8 @@ jupyter-nbextensions-configurator==0.4.0
 pysftp==0.2.9
 python-dotenv==0.8.2
 pandas==0.23.0
+colorama
+tqdm
 
 # dependencies
 pycodestyle==2.3.1

@@ -22,7 +22,6 @@ def call_logtool(mvn_command):
     try:
         with subprocess.Popen(mvn_command, shell=True, stdout=subprocess.PIPE) as p:
             stdout, stderr = p.communicate()
-        print('Creation successful!')
     except ValueError as error:
         print(error)
 

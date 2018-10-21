@@ -1,12 +1,11 @@
 import tarfile
-
 from powertac_logfiles import data
 
 
 def extract_tarfile(file_name):
     file_name = data.RAW_DATA_PATH + '/' + file_name
     try:
-        print('Extracting: {}'.format(file_name))
+        print('Extract: {}\n'.format(file_name))
         with tarfile.open(file_name) as tar:
 
             # collect all log-files from subdir 'log of tar file'
@@ -16,7 +15,6 @@ def extract_tarfile(file_name):
             ]
 
             tar.extractall(data.EXTRACTED_DATA_PATH, members=subdir_and_files)
-        print('Extraction successful!!\n')
 
     except ValueError as error:
         print(error)
