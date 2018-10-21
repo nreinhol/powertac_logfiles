@@ -3,7 +3,7 @@
 #################################################################################
 # GLOBALS                                                                       #
 #################################################################################
-PROJECT_NAME = powertac_lofgiles
+PROJECT_NAME = powertac_logfiles
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 VENV_DIR =  $(PROJECT_DIR)/env
 JUPYTER_DIR =  $(VENV_DIR)/share/jupyter
@@ -25,8 +25,8 @@ requirements: venv
 	$(PIP) install -r requirements.txt
 
 ## download logfiles
-download:
-	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/data/download.py
+powertac_logfiles:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/build/make.py
 
 ## Delete all compiled Python files
 clean:
