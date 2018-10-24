@@ -1,14 +1,26 @@
 from .download import get_file_from_url # noqa
-from .extract import extract_tarfile # noqa
+from .extract import extract_tarfile  # noqa
+from .clean import clean_file_dir  # noqa
+from .prepare import prepare_web_data  # noqa
 
-from pathlib import Path
+from pathlib import Path  # noqa
 
-# Constants
+
+# General Constants
 PROJECT_DIR = str(Path(__file__).resolve().parents[3])
-RAW_DATA_PATH = PROJECT_DIR + '/data/raw'
-EXTRACTED_DATA_PATH = PROJECT_DIR + '/data/extracted'
-LOG_DATA_PATH = PROJECT_DIR + '/data/extracted/log'
-PROCESSED_DATA_PATH = PROJECT_DIR + '/data/processed'
+PROCESSED_DATA_PATH = PROJECT_DIR + '/data/processed/'
 
-# Path to powertac log-tool pom, needs to adjusted
+# Constants for local processing
+LOCAL_LOG_DATA_PATH = PROJECT_DIR + '/data/local/'
+
+# Constants for web processing
+RAW_DATA_PATH = PROJECT_DIR + '/data/web/raw/'
+EXTRACTED_DATA_PATH = PROJECT_DIR + '/data/web/extracted/'
+WEB_LOG_DATA_PATH = EXTRACTED_DATA_PATH + 'log/'
+URL = 'http://ts.powertac.org/log/'
+FILE_NAME = 'PowerTAC_2018_Finals'
+FILE_NAME_ = FILE_NAME + '_'
+FILE_TYPE = '.tar.gz'
+
+# Path to powertac log-tool pom
 LOGTOOL_PATH = PROJECT_DIR + '/powertac-tools/logtool-examples'
