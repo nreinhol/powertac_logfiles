@@ -6,38 +6,44 @@ from powertac_logfiles import output
 from powertac_logfiles import build as b
 
 
-def make_log_files():
-    output.write_intro()
-    for index, game_number in enumerate(b.GAME_NUMBERS):
+def make_log_files(local=True):
+    # check which data dir should be used
+    if local:
+        log_files = b.get_log_files(data.LOCAL_LOG_DATA_PATH)
+    else:
+        log_files = b.get_log_files(data.WEB_LOG_DATA_PATH)
+
+    # start processing log files
+    for index, log_file in enumerate(log_files):
         index += 1  # beautify index for output
 
-        # Create variables
-        file_name_ = b.FILE_NAME_ + str(game_number) + b.FILE_TYPE
-        url = b.URL + file_name_
-
-        # Console output
-        output.write_source_info(index, url)
-
-        # Get and prepare state / trace file
-        data.get_file_from_url(url, file_name_)
-        data.extract_tarfile(file_name_)
+        # print output if local processing
+        if local:
+            output.print_processing_info(index, log_file, log_files, 100)
 
         # Create mvn commands
         mvn_cmd_list = []
         for key, value in b.LOG_FILES.items():
-            mvn_cmd_list.append(b.create_mvn_command(key, value, str(game_number)))
+            input_file, output_file = b.create_mvn_parameter(log_file, key)
+            mvn_cmd_list.append(b.create_mvn_command(value, input_file, output_file))
 
-        # Create log files through thread pool
+        # Execute mvn commands through thread pool
         pool = ThreadPool(4)
-        for _ in tqdm(pool.imap_unordered(b.call_logtool, mvn_cmd_list), total=len(mvn_cmd_list), ncols=85, desc='└── creating log-files'):
+        for _ in tqdm(pool.imap_unordered(b.execute_logtool, mvn_cmd_list), total=len(mvn_cmd_list), ncols=85, desc='└── creating log-files'):
             pass
         pool.close()
         pool.join()
 
+
+def make_web_log_files():
+    for index, game_number in enumerate(b.GAME_NUMBERS):
+        index += 1  # beautify index for output
+
         # Clean file dirs
-        b.delete_extracted_files()
-        b.delete_tarfiles()
+        data.clean_file_dir(data.RAW_DATA_PATH)
+        data.clean_file_dir(data.WEB_LOG_DATA_PATH)
 
+        # Download and extract
+        data.prepare_web_data(index, game_number)
 
-if __name__ == '__main__':
-    make_log_files()
+        make_log_files(local=False)

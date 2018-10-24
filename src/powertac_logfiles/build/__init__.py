@@ -1,13 +1,13 @@
-from .utils import create_mvn_command # noqa
-from .utils import call_logtool # noqa
-from .utils import delete_extracted_files # noqa
-from .utils import delete_tarfiles # noqa
+from .utils import create_mvn_command  # noqa
+from .utils import create_mvn_parameter  # noqa
+from .utils import execute_logtool  # noqa
+from .utils import get_log_files  # noqa
+from .make import make_log_files  # noqa
+from .make import make_web_log_files  # noqa
 
-# Constants
-URL = 'http://ts.powertac.org/log/'
-FILE_NAME_ = 'PowerTAC_2018_Finals_'
-FILE_NAME = 'PowerTAC_2018_Finals'
-FILE_TYPE = '.tar.gz'
+
+# Constants for local processing
+
 LOG_FILES = {'BrokerAccounting': 'org.powertac.logtool.example.BrokerAccounting',
              'BrokerImbalanceCost': 'org.powertac.logtool.example.BrokerImbalanceCost',
              'BrokerMktPrices': 'org.powertac.logtool.example.BrokerMktPrices',
