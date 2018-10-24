@@ -24,10 +24,6 @@ requirements: venv
 	$(PIP) install -U pip setuptools wheel
 	$(PIP) install -r requirements.txt
 
-## download logfiles
-powertac_logfiles:
-	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/build/make.py
-
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
@@ -62,3 +58,23 @@ endif
 #################################################################################
 # CUSTOM COMMANDS                                                               #
 #################################################################################
+
+## process logfiles
+powertac_logfiles:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/cli/run.py
+
+## cleaning data directory
+clean_dir:
+	rm -r data/extracted/*
+	rm -r data/processed/*
+	rm -r data/raw/*
+
+## cleaning data directory
+data_dir:
+	mkdir data
+	mkdir data/local
+	mkdir data/processed
+	mkdir data/web
+	mkdir data/web/extracted
+	mkdir data/web/extracted/log
+	mkdir data/web/raw
