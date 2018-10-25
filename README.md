@@ -1,4 +1,4 @@
-![alt text](img/header.png)
+![alt text](img/header.png)  
 A small cli program which build csv log-files of the PowerTAC
 
 ### Provide:
