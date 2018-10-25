@@ -13,13 +13,18 @@ def make_log_files(local=True):
     else:
         log_files = b.get_log_files(data.WEB_LOG_DATA_PATH)
 
+    # exit function if no files found
+    if not log_files:
+        output.print_no_file_found()
+        return
+
     # start processing log files
     for index, log_file in enumerate(log_files):
         index += 1  # beautify index for output
 
         # print output if local processing
         if local:
-            output.print_processing_info(index, log_file, log_files, 100)
+            output.print_processing_info(index, log_file, log_files)
 
         # Create mvn commands
         mvn_cmd_list = []
@@ -34,6 +39,7 @@ def make_log_files(local=True):
         pool.close()
         pool.join()
 
+    output.print_end()
 
 def make_web_log_files():
     for index, game_number in enumerate(b.GAME_NUMBERS):
