@@ -1,3 +1,4 @@
+![alt text](img/header.png)
 A small cli program which build csv log-files of the PowerTAC
 
 ### Provide:
@@ -26,6 +27,8 @@ make data_dir
 ```
 make powertac_logfiles
 ```
+
+![alt text](img/title.png)
 
 ### Options:
 
