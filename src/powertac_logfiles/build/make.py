@@ -39,7 +39,6 @@ def make_log_files(local=True):
         pool.close()
         pool.join()
 
-    output.print_end()
 
 def make_web_log_files():
     for index, game_number in enumerate(b.GAME_NUMBERS):
