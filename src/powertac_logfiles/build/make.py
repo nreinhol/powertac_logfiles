@@ -29,7 +29,7 @@ def make_log_files(local=True):
         # Create mvn commands
         mvn_cmd_list = []
         for key, value in b.LOG_FILES.items():
-            input_file, output_file = b.create_mvn_parameter(log_file, key)
+            input_file, output_file = b.create_mvn_parameter(log_file, key, local)
             mvn_cmd_list.append(b.create_mvn_command(value, input_file, output_file))
 
         # Execute mvn commands through thread pool

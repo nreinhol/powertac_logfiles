@@ -6,8 +6,12 @@ from os.path import isfile, join
 from powertac_logfiles import data
 
 
-def create_mvn_parameter(log_file, key):
-    input_file = data.WEB_LOG_DATA_PATH + log_file
+def create_mvn_parameter(log_file, key, local=True):
+    if(local):
+        input_file = data.LOCAL_LOG_DATA_PATH + log_file
+    else:
+        input_file = data.WEB_LOG_DATA_PATH + log_file
+
     output_file = data.PROCESSED_DATA_PATH + log_file.split('/')[-1][:-6] + '_' + key + '.csv'
 
     return input_file, output_file
