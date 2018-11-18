@@ -63,13 +63,20 @@ endif
 powertac_logfiles:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/cli/run.py
 
+## visualize broker performence
+visualize:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py
+
+## process and visualize logfiles
+process_logfiles: powertac_logfiles visualize
+
 ## cleaning data directory
 clean_dir:
 	rm -r data/extracted/*
 	rm -r data/processed/*
 	rm -r data/raw/*
 
-## cleaning data directory
+## create data directories
 data_dir:
 	mkdir data
 	mkdir data/local
@@ -78,3 +85,10 @@ data_dir:
 	mkdir data/web/extracted
 	mkdir data/web/extracted/log
 	mkdir data/web/raw
+
+## create output directories
+output_dir:
+	mkdir outputs
+
+## initial project setupt
+initialize: requirements data_dir output_dir

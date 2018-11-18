@@ -33,7 +33,7 @@ def make_log_files(local=True):
             mvn_cmd_list.append(b.create_mvn_command(value, input_file, output_file))
 
         # Execute mvn commands through thread pool
-        pool = ThreadPool(4)
+        pool = ThreadPool(1)
         for _ in tqdm(pool.imap_unordered(b.execute_logtool, mvn_cmd_list), total=len(mvn_cmd_list), ncols=85, desc='└── creating log-files'):
             pass
         pool.close()

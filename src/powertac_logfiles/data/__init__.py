@@ -24,3 +24,6 @@ FILE_TYPE = '.tar.gz'
 
 # Path to powertac log-tool pom
 LOGTOOL_PATH = PROJECT_DIR + '/powertac-tools/logtool-examples/pom.xml'
+
+# output directories
+OUTPUT_DIR = PROJECT_DIR + '/outputs'

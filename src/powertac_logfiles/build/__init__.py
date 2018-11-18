@@ -8,8 +8,9 @@ from .make import make_web_log_files  # noqa
 
 # Constants for local processing
 
-LOG_FILES = {'BrokerAccounting': 'org.powertac.logtool.example.BrokerAccounting',
-             'BrokerImbalanceCost': 'org.powertac.logtool.example.BrokerImbalanceCost',
-             'BrokerMktPrices': 'org.powertac.logtool.example.BrokerMktPrices',
-             'BrokerBalancingActions': 'org.powertac.logtool.example.BrokerBalancingActions'}
+LOG_FILES = {'BrokerImbalanceCost': 'org.powertac.logtool.example.BrokerImbalanceCost',
+             'BrokerCosts': 'org.powertac.logtool.example.BrokerCosts',
+             'TariffMktShare': 'org.powertac.logtool.example.TariffMktShare',
+             'BrokerAccounting': 'org.powertac.logtool.example.BrokerAccounting',
+             'MktPriceStats': 'org.powertac.logtool.example.MktPriceStats'}
 GAME_NUMBERS = list(range(1, 324))
