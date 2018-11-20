@@ -70,11 +70,6 @@ visualize:
 ## process and visualize logfiles
 process_logfiles: powertac_logfiles visualize
 
-## cleaning data directory
-clean_dir:
-	rm -r data/*
-	data_dir
-
 ## create data directories
 data_dir:
 	mkdir data
@@ -84,6 +79,11 @@ data_dir:
 	mkdir data/web/extracted
 	mkdir data/web/extracted/log
 	mkdir data/web/raw
+
+## cleaning data directory
+clean_dir:
+	rm -r data/*
+	data_dir
 
 ## create output directories
 output_dir:
