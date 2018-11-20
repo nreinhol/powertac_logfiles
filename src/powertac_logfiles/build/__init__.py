@@ -13,4 +13,5 @@ LOG_FILES = {'BrokerImbalanceCost': 'org.powertac.logtool.example.BrokerImbalanc
              'TariffMktShare': 'org.powertac.logtool.example.TariffMktShare',
              'BrokerAccounting': 'org.powertac.logtool.example.BrokerAccounting',
              'MktPriceStats': 'org.powertac.logtool.example.MktPriceStats'}
-GAME_NUMBERS = list(range(1, 324))
+LOG_FILES = {'BrokerAccounting': 'org.powertac.logtool.example.BrokerAccounting'}
+GAME_NUMBERS = list(range(1, 21))
