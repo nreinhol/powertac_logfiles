@@ -72,9 +72,8 @@ process_logfiles: powertac_logfiles visualize
 
 ## cleaning data directory
 clean_dir:
-	rm -r data/extracted/*
-	rm -r data/processed/*
-	rm -r data/raw/*
+	rm -r data/*
+	data_dir
 
 ## create data directories
 data_dir:
