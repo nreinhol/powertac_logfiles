@@ -74,6 +74,9 @@ visualize_powertac_2018:
 ## process and visualize logfiles
 process_logfiles: powertac_logfiles visualize
 
+## process and visualize logfiles from Power Tac 2018 Competition
+process_logfiles: powertac_logfiles visualize_powertac_2018
+
 ## create data directories
 data_dir:
 	mkdir data
