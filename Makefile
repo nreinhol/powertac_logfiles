@@ -67,6 +67,10 @@ powertac_logfiles:
 visualize:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py
 
+## visualize broker performence in Power Tac 2018
+visualize_powertac_2018:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --combine_game_ids '2018'
+
 ## process and visualize logfiles
 process_logfiles: powertac_logfiles visualize
 
@@ -82,7 +86,7 @@ data_dir:
 
 ## cleaning data directory
 clean_dir:
-	rm -r data/*
+	rm -r data
 	data_dir
 
 ## create output directories
