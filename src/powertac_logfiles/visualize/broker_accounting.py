@@ -96,5 +96,4 @@ def create_dataframe_for_single_brokeraccounting(file_name):
 
 
 if __name__ == '__main__':
-    # print(list(np.random.choice(300, 80, replace=False) + 1))
     visualize_broker_accounting(combine_game_ids='2018')
