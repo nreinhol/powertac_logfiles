@@ -16,5 +16,5 @@ LOG_FILES = {'BrokerImbalanceCost': 'org.powertac.logtool.example.BrokerImbalanc
              'BrokerAccounting': 'org.powertac.logtool.example.BrokerAccounting',
              'MktPriceStats': 'org.powertac.logtool.example.MktPriceStats'}
 LOG_FILES = {'BrokerAccounting': 'org.powertac.logtool.example.BrokerAccounting'}
-GAME_NUMBERS = list(range(1, 3))
-GAME_NUMBERS = list(np.random.choice(300, 5, replace=False) + 1)
+# GAME_NUMBERS = list(np.random.choice(300, 5, replace=False) + 1)
+GAME_NUMBERS = list(range(1, 325))
