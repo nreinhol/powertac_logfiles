@@ -15,6 +15,7 @@ colorama
 tqdm
 matplotlib
 seaborn
+pymysql
 
 # dependencies
 pycodestyle==2.3.1
