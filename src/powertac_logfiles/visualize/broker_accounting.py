@@ -6,14 +6,14 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 
-def visualize_broker_accounting(combine_game_ids=None):
+def visualize_broker_accounting(combine_game_ids=None, box_plot=False):
     if combine_game_ids == None:
         visualize_broker_accounting_for_single_game()
     else:
-        visualize_broker_accountings_of_tournament(combine_game_ids)
+        visualize_broker_accountings_of_tournament(combine_game_ids, box_plot=box_plot)
 
 
-def visualize_broker_accountings_of_tournament(combine_game_ids):
+def visualize_broker_accountings_of_tournament(combine_game_ids, box_plot=False):
     # find relavant files
     files_to_consider = []
     for file_name in os.listdir(data.PROCESSED_DATA_PATH):
@@ -21,16 +21,28 @@ def visualize_broker_accountings_of_tournament(combine_game_ids):
             files_to_consider.append(file_name)
     results = []
     for file in files_to_consider:
+        print('consider broker accounting: {}'.format(file))
         results.append(create_dataframe_for_single_brokeraccounting(file))
     df_for_boxplot = pd.concat(results, ignore_index=True)
+    plot_broker_accounting(True, combine_game_ids, df_for_boxplot)
+    plot_broker_accounting(False, combine_game_ids, df_for_boxplot)
+
+
+def plot_broker_accounting(box_plot, combine_game_ids, df_for_boxplot):
     fig = plt.figure(figsize=(40, 30))
     ax1 = fig.add_subplot(111)
     plt.title('Broker Performance Drivers in the Power Tac Competition 2018', fontsize=48)
-    g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=12)
+    plot_type = ''
+    if box_plot:
+        g = sns.boxplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot)
+        plot_type = 'boxplot'
+    else:
+        g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=12)
+        plot_type = 'swarmplot'
     g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=30)
     fig.tight_layout()
-    plt.savefig('{}/tournament_{}_performance_drivers'.format(data.OUTPUT_DIR, combine_game_ids))
-    print("Successfully created performance drivers boxplot plot for tournament: {}.".format(combine_game_ids))
+    plt.savefig('{}/tournament_{}_performance_drivers_{}'.format(data.OUTPUT_DIR, combine_game_ids, plot_type))
+    print("Successfully created performance drivers {} plot for tournament: {}.".format(plot_type, combine_game_ids))
 
 
 def visualize_broker_accounting_for_single_game():
@@ -46,7 +58,7 @@ def visualize_broker_accounting_for_single_game():
                                 hue='broker',
                                 size=10,
                                 data=df_broker_accounting_transformed_grouped)
-            g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=100)
+            g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=12)
             fig.tight_layout()
             plt.savefig('{}/{}_broker_accounting'.format(data.OUTPUT_DIR, visualize.grep_game_name(file_name)), bbox_inches="tight")
             print("Successfully created broker accounting performance driver plot.")
@@ -96,4 +108,4 @@ def create_dataframe_for_single_brokeraccounting(file_name):
 
 
 if __name__ == '__main__':
-    visualize_broker_accounting(combine_game_ids='2018')
+    visualize_broker_accounting(combine_game_ids='2018', box_plot=True)

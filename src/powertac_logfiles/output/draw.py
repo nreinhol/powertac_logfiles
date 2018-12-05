@@ -44,6 +44,7 @@ def print_cli_intro():
     c.secho('├── [a]: process your local log-files')
     c.secho('├── [b]: process the final log-files from web')
     c.secho('└── [c]: show info\n')
+    c.secho('└── [d]: download data from database\n')
 
 
 def print_no_file_found():

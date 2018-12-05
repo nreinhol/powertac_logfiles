@@ -5,7 +5,7 @@ from powertac_logfiles import build as b
 
 
 @c.command()
-@c.option("--option", prompt='option', type=c.Choice(['a', 'b', 'c']))
+@c.option("--option", prompt='option', type=c.Choice(['a', 'b', 'c', 'd']))
 def choose_option(option):
     """PowerTac log-files. A small cli program which build csv log-files of the PowerTAC """
 
@@ -19,6 +19,9 @@ def choose_option(option):
 
     elif option == 'c':
         output.print_help()
+
+    elif option == 'd':
+        b.make_database_download()
 
 
 def main():

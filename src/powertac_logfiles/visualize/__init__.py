@@ -1,6 +1,11 @@
 from .imbalance import visualize_imbalance  # noqa
 from .imbalance import visualize_total_costs  # noqa
+from .imbalance import plot_imbalance_histogram  # noqa
+from .imbalance import plot_balancing_transactions  # noqa
 from .tariff import plot_tariff_market_share  # noqa
 from .utils import grep_game_name  # noqa
 from .cleared_trades import visualize_cleared_trades  # noqa
 from .broker_accounting import visualize_broker_accounting  # noqa
+from .customer_demand import visualize_customer_demand  # noqa
+from .weather import visualize_weather  # noqa
+from .capacity_transactions import visualize_capacity_transactions  # noqa

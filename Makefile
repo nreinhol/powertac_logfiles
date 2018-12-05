@@ -67,6 +67,13 @@ powertac_logfiles:
 visualize:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py
 
+## visualize broker performence
+visualize_multiple_games:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --combine_game_ids 'competition_test'
+
+## visualize broker performence
+process_multiple_games: powertac_logfiles visualize_multiple_games
+
 ## visualize broker performence in Power Tac 2018
 visualize_powertac_2018:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --combine_game_ids '2018'
