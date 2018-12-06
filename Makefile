@@ -64,25 +64,29 @@ powertac_logfiles:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/cli/run.py
 
 ## visualize broker performence
-visualize:
-	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py
+visualize_log_files:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No
 
 ## visualize broker performence
-visualize_multiple_games:
-	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --combine_game_ids 'competition_test'
+visualize_database:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database Yes
 
 ## visualize broker performence
-process_multiple_games: powertac_logfiles visualize_multiple_games
+visualize_multiple_log_files:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No --combine_game_ids 'competition_test'
+
+## visualize broker performence
+process_multiple_log_files: powertac_logfiles visualize_multiple_games
 
 ## visualize broker performence in Power Tac 2018
-visualize_powertac_2018:
-	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --combine_game_ids '2018'
+visualize_powertac_2018_log_files:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No --combine_game_ids '2018'
 
 ## process and visualize logfiles
-process_logfiles: powertac_logfiles visualize
+process_logfiles: powertac_logfiles visualize_log_files
 
 ## process and visualize logfiles from Power Tac 2018 Competition
-process_logfiles_powertac_2018: powertac_logfiles visualize_powertac_2018
+process_logfiles_powertac_2018: powertac_logfiles visualize_powertac_2018_log_files
 
 ## create data directories
 data_dir:
