@@ -23,6 +23,7 @@ def visualize_cleared_trades():
             df_cleared_trades_transformed['timeslot'] = pd.to_numeric(df_cleared_trades_transformed['timeslot'])
             df_cleared_trades_transformed['day_of_week'] = pd.to_numeric(df_cleared_trades_transformed['day_of_week'])
             df_cleared_trades_transformed['hour_of_day'] = pd.to_numeric(df_cleared_trades_transformed['hour_of_day'])
+            df_cleared_trades_transformed['time_delta'] = pd.to_numeric(df_cleared_trades_transformed['time_delta'])
 
             df_cleared_trades_transformed = df_cleared_trades_transformed.drop('mkt_qty_and_price', 1)
 
@@ -43,6 +44,15 @@ def visualize_cleared_trades():
             fig.tight_layout()
             plt.savefig('{}/{}_mkt_price_and_quantity_hour_of_day'.format(data.OUTPUT_DIR, visualize.grep_game_name(file_name)))
             print("Successfully created market price and quantity hour of day boxplot plot.")
+
+            fig = plt.figure(figsize=(12, 15))
+            ax1 = fig.add_subplot(211)
+            sns.scatterplot(ax=ax1, x="mkt_price", y="mkt_qty_MWh", hue='hour_of_day', palette="ch:r=-.2,d=.3_r", data=df_cleared_trades_transformed)
+            ax2 = fig.add_subplot(212)
+            sns.scatterplot(ax=ax2, x="mkt_price", y="mkt_qty_MWh", hue='time_delta', palette="ch:r=-.2,d=.3_r", data=df_cleared_trades_transformed)
+            fig.tight_layout()
+            plt.savefig('{}/{}_cleared_trades'.format(data.OUTPUT_DIR, visualize.grep_game_name(file_name)))
+            print("Successfully created cleared trade plot.")
 
 
 if __name__ == '__main__':
