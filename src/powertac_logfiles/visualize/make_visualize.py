@@ -12,9 +12,9 @@ def choose_option(database, combine_game_ids):
         visualize.create_dir_if_not_exists('{}/{}'.format(OUTPUT_DIR, combine_game_ids))
 
     if database == 'Yes':
+        visualize.visualize_tariff_specification(combine_game_ids)
         visualize.plot_imbalance_database(combine_game_ids)
         visualize.visualize_customer_demand(combine_game_ids)
-        visualize.visualize_tariff_specification(combine_game_ids)
         # visualize.visualize_cleared_trades_from_database(combine_game_ids)
         # visualize.visualize_orderbook(combine_game_ids)
         # visualize.visualize_weather(combine_game_ids)

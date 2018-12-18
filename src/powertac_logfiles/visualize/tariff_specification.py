@@ -16,8 +16,10 @@ def visualize_tariff_specification(combine_game_ids):
         for game_id in list(df_tariff_specifications['gameId'].unique()):
             df_tariff_specifications_for_game = df_tariff_specifications[df_tariff_specifications['gameId'] == game_id]
             plot_tariff_specifiations(df_tariff_specifications_for_game, game_id)
+            plot_tariff_usage_of_brokers(df_tariff_specifications_for_game, game_id)
     else:
         plot_tariff_specifiations(df_tariff_specifications, combine_game_ids)
+        plot_tariff_usage_of_brokers(df_tariff_specifications, combine_game_ids)
     print("Successfully created tariff specification plots.")
 
 
@@ -49,3 +51,25 @@ def plot_tariff_specifiations(df_tariff_specifications, game_id):
         ax5 = sns.scatterplot(x="postedTimeslotIndex", y="expiration", hue='brokerName', data=df_plot, s=100)
         fig.tight_layout()
         plt.savefig(create_path_for_plot('tariff_specification', power_type, game_id))
+
+
+def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
+
+    if df_tariff_specifications.empty:
+        print('ERROR: no tariff specification data for game {} stored in db.'.format(game_id))
+        return
+
+    df_tariff_specifications['usage_count'] = 1
+    df_tariff_specifications_grouped = df_tariff_specifications[['brokerName', 'powerType', 'usage_count']].groupby(['brokerName', 'powerType'], as_index=False).sum()
+
+    fig = plt.figure(figsize=(15, 10))
+    ax1 = fig.add_subplot(111)
+    g = sns.swarmplot(ax=ax1,
+                      x='powerType',
+                      y='usage_count',
+                      hue='brokerName',
+                      size=10,
+                      data=df_tariff_specifications_grouped)
+    g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=12)
+    fig.tight_layout()
+    plt.savefig(create_path_for_plot('tariff_type_usage', '', game_id), bbox_inches="tight")
