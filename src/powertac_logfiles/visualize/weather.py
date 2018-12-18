@@ -5,6 +5,9 @@ from powertac_logfiles import data
 
 def visualize_weather():
     df_weather_report = data.load_weather_report()
+    if df_weather_report.empty:
+        print("Error: cannot visualize weather data, because data is empty")
+        return
 
     fig = plt.figure(figsize=(12, 15))
     ax1 = fig.add_subplot(311)

@@ -72,8 +72,12 @@ visualize_database:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database Yes
 
 ## visualize broker performence
-visualize_multiple_log_files:
-	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No --combine_game_ids 'competition_test'
+visualize_log_files_multiple_games:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No --combine_game_ids $(game_id)
+
+## visualize broker performence
+visualize_database_multiple_games:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database Yes --combine_game_ids $(game_id)
 
 ## visualize broker performence
 process_multiple_log_files: powertac_logfiles visualize_multiple_games
@@ -98,14 +102,19 @@ data_dir:
 	mkdir data/web/extracted/log
 	mkdir data/web/raw
 
-## cleaning data directory
-clean_dir:
-	rm -r data
-	data_dir
-
 ## create output directories
 output_dir:
-	mkdir outputs
+	mkdir output
+
+## cleaning data directory
+clean_data_dir:
+	rm -r data
+	make data_dir
+
+## clean output directories
+clean_output_dir:
+	rm -r output
+	make output_dir
 
 ## initial project setupt
 initialize: requirements data_dir output_dir

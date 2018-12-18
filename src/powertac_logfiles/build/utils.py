@@ -47,7 +47,7 @@ def execute_logtool(mvn_command):
 def get_log_files(log_data_path):
     try:
         log_files = [f for f in os.listdir(log_data_path) if isfile(join(log_data_path, f))]
-        regex = re.compile(r'.state')
+        regex = re.compile(r'^((?!init).)*.state')
 
         return list(filter(regex.search, log_files))
 

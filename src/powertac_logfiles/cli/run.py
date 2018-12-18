@@ -30,4 +30,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    b.make_log_files()
+

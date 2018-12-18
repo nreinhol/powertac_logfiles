@@ -7,6 +7,10 @@ from .database import load_balance_report  # noqa
 from .database import load_weather_report  # noqa
 from .database import load_balancing_transactions  # noqa
 from .database import load_capacity_transactions  # noqa
+from .database import load_distribution_reports  # noqa
+from .database import load_orderbooks  # noqa
+from .database import load_cleared_trades  # noqa
+from .database import load_tariff_specifications  # noqa
 from .prepare import filter_on_produce_and_consume  # noqa
 
 from pathlib import Path  # noqa
@@ -17,7 +21,7 @@ PROJECT_DIR = str(Path(__file__).resolve().parents[3])
 PROCESSED_DATA_PATH = PROJECT_DIR + '/data/processed/'
 
 # Constants for local processing
-LOCAL_LOG_DATA_PATH = PROJECT_DIR + '/data/local/'
+LOCAL_LOG_DATA_PATH = '/home/ewiis3/PowerTac/server-distribution/log/'
 
 # Constants for web processing
 RAW_DATA_PATH = PROJECT_DIR + '/data/web/raw/'
@@ -32,4 +36,4 @@ FILE_TYPE = '.tar.gz'
 LOGTOOL_PATH = PROJECT_DIR + '/powertac-tools/logtool-examples/pom.xml'
 
 # output directories
-OUTPUT_DIR = PROJECT_DIR + '/outputs'
+OUTPUT_DIR = PROJECT_DIR + '/output'

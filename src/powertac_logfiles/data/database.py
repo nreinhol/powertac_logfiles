@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def __connect_to_local_database():
-    conn = pymysql.connect(host='localhost', user='root', passwd='Web2)wanted', db='ewiis3')
+    conn = pymysql.connect(host='localhost', user='root', passwd='Sorge6,aastet', db='ewiis3')
     return conn
 
 
@@ -42,3 +42,27 @@ def load_capacity_transactions():
     sql_statement = "SELECT t.* FROM ewiis3.capacity_transaction t"
     df_capacity_transactions = execute_sql_query(sql_statement)
     return df_capacity_transactions
+
+
+def load_distribution_reports():
+    sql_statement = "SELECT t.* FROM ewiis3.distribution_report t"
+    df_distribution_reports = execute_sql_query(sql_statement)
+    return df_distribution_reports
+
+
+def load_orderbooks():
+    sql_statement = "SELECT t.* FROM ewiis3.orderbook_order t"
+    df_orderbook = execute_sql_query(sql_statement)
+    return df_orderbook
+
+
+def load_cleared_trades():
+    sql_statement = "SELECT t.* FROM ewiis3.cleared_trade t"
+    df_cleared_trades = execute_sql_query(sql_statement)
+    return df_cleared_trades
+
+
+def load_tariff_specifications():
+    sql_statement = "SELECT t.* FROM ewiis3.tariff_specification t"
+    df_tariff_specification = execute_sql_query(sql_statement)
+    return df_tariff_specification
