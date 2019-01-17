@@ -44,21 +44,6 @@ def plot_imbalance(df_imbalance, game_suffix):
     print("Successfully created imbalance cost plot.")
 
 
-def visualize_total_costs():
-    '''visualize the imbalance costs from data of a processed state file.'''
-    for file_name in os.listdir(data.PROCESSED_DATA_PATH):
-        if not file_name.find('Costs') == -1:
-            df_costs = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=';', decimal=',', skiprows=1)
-            # df_costs_shares = df_costs.drop('broker-name', 1).convert_objects(convert_numeric=True).apply(lambda x: x/x.sum())
-            df_costs_transformed = df_costs.melt(id_vars=['broker-name'], var_name='cost', value_name='value')
-            df_costs_transformed['value'] = pd.to_numeric(df_costs_transformed['value'])
-            fig = plt.figure()
-            ax = sns.barplot(x="cost", y="value", hue="broker-name", data=df_costs_transformed)
-            fig.tight_layout()
-            plt.savefig('{}/{}_costs'.format(data.OUTPUT_DIR, visualize.get_game_id_from_logfile_name(file_name)))
-            print("Successfully created costs plot.")
-
-
 def plot_imbalance_database(combine_game_ids):
     df_balance_report = data.load_balance_report()
 

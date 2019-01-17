@@ -1,5 +1,5 @@
 from .imbalance import visualize_imbalance  # noqa
-from .imbalance import visualize_total_costs  # noqa
+from .broker_costs import visualize_total_costs  # noqa
 from .imbalance import plot_imbalance_database  # noqa
 from .imbalance import plot_balancing_transactions  # noqa
 from .tariff import visualize_tariff_mkt_share  # noqa
