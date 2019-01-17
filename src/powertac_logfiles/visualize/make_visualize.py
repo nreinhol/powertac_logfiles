@@ -21,6 +21,7 @@ def choose_option(database, combine_game_ids):
         # visualize.plot_balancing_transactions(combine_game_ids)
         # visualize.visualize_capacity_transactions(combine_game_ids)
     else:
+        visualize.visualize_customer_stats(combine_game_ids)
         visualize.visualize_total_costs(combine_game_ids)
         visualize.visualize_tariff_mkt_share(combine_game_ids)
         visualize.visualize_cleared_trades(combine_game_ids)
