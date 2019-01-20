@@ -28,19 +28,32 @@ def visualize_imbalance(combine_game_ids):
 
 
 def plot_imbalance(df_imbalance, game_suffix):
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=(15, 25))
     # fig.suptitle("Imbalance", fontsize=16)
-    ax1 = fig.add_subplot(311)
+
+    ax1 = fig.add_subplot(411)
     ax1.set_title("Net Demand")
     ax1 = sns.lineplot(x="timeslot", y="netDemand", hue="broker", data=df_imbalance)
-    ax2 = fig.add_subplot(312)
+
+    ax2 = fig.add_subplot(412)
     ax2.set_title("Imbalance")
     ax2 = sns.lineplot(x="timeslot", y="imbalance", hue="broker", data=df_imbalance)
-    ax3 = fig.add_subplot(313)
+
+    ax3 = fig.add_subplot(413)
     ax3.set_title("Imbalance Cost")
     ax3 = sns.lineplot(x="timeslot", y="imbalanceCost", hue="broker", data=df_imbalance)
+
+    ax4 = fig.add_subplot(414)
+    df_distribution_reports = data.load_distribution_reports()
+    df_plot = df_distribution_reports.drop('gameId', 1).melt(id_vars=['balanceReportId', 'timeslot'], var_name='type', value_name='kWh')
+    df_all_production_plot = df_plot[df_plot['type'] == 'totalProduction']
+    ax4 = sns.lineplot(ax=ax4, x="timeslot", y="kWh", data=df_all_production_plot, label='total grid Customers Production', color='#e8483b')
+    df_all_consumption_plot = df_plot[df_plot['type'] == 'totalConsumption']
+    df_all_consumption_plot['kWh'] = -1 * df_all_consumption_plot['kWh']
+    ax4 = sns.lineplot(ax=ax4, x="timeslot", y="kWh", data=df_all_consumption_plot, label='total grid Consumption', color='#14779b')
+
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('imbalance', '', game_suffix))
+    plt.savefig(visualize.create_path_for_plot('imbalance', 'logfileAndDb', game_suffix))
     print("Successfully created imbalance cost plot.")
 
 
@@ -71,7 +84,7 @@ def plot_imbalance_histogram(df_balance_report, game_suffix):
     ax3.set_title("netImbalance")
     g = sns.boxplot(x=df_balance_report['netImbalance'])
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('imbalance', '', game_suffix))
+    plt.savefig(visualize.create_path_for_plot('imbalance', 'db', game_suffix))
     print("Successfully created imbalance plot.")
 
 
