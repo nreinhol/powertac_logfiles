@@ -49,7 +49,7 @@ def plot_total_demand(df_tariff_transactions, game_suffix):
     ax2 = sns.lineplot(ax=ax2, x="timeslot", y="kWh", data=df_all_consumption_plot, label='total grid Consumption', color='#14779b')
 
     fig.tight_layout()
-    plt.savefig(create_path_for_plot('consumption_and_production', '', game_suffix))
+    plt.savefig(create_path_for_plot('consumption_and_production', 'db', game_suffix))
     print('Successfully created total demand plot.')
 
 
@@ -71,7 +71,7 @@ def plot_total_share(df_tariff_transactions, game_suffix):
     ax2 = sns.boxplot(ax=ax2, x="customerName", y="currentSubscribedPopulation", hue='powerType', data=df_filtered[['customerName', 'currentSubscribedPopulation', 'powerType']])
     ax2.set_xticklabels(ax2.get_xticklabels(), rotation=90, fontsize=15)
     fig.tight_layout()
-    plt.savefig(create_path_for_plot('consumption_customer_contribution', '', game_suffix))
+    plt.savefig(create_path_for_plot('consumption_customer_contribution', 'db', game_suffix))
     print('Successfully created total demand share plot.')
 
 
@@ -100,8 +100,7 @@ def plot_all_customer_demand_curves(df_tariff_transactions):
             ax3 = sns.lineplot(ax=ax3, x="postedTimeslotIndex", y="currentSubscribedPopulation",  hue='txType', data=df_powertype_per_customer)
             fig.tight_layout()
             plt.savefig('{}/demand/{}_{}_{}'.format(data.OUTPUT_DIR, customerId, customerName, powertype))
-            df_powertype_per_customer.to_csv(
-                '{}/demand/csv/{}_{}_{}.csv'.format(data.OUTPUT_DIR, customerId, customerName, powertype))
+            # df_powertype_per_customer.to_csv('{}/demand/csv/{}_{}_{}.csv'.format(data.OUTPUT_DIR, customerId, customerName, powertype))
 
 
 if __name__ == '__main__':
