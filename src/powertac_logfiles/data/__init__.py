@@ -12,6 +12,7 @@ from .database import load_orderbooks  # noqa
 from .database import load_cleared_trades  # noqa
 from .database import load_tariff_specifications  # noqa
 from .database import load_rates  # noqa
+from .database import load_order_submits  # noqa
 from .prepare import filter_on_produce_and_consume  # noqa
 
 from pathlib import Path  # noqa

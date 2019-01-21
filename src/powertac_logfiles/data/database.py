@@ -68,6 +68,12 @@ def load_tariff_specifications():
     return df_tariff_specification
 
 
+def load_order_submits():
+    sql_statement = "SELECT t.* FROM ewiis3.order_submit t"
+    df_order_submits = execute_sql_query(sql_statement)
+    return df_order_submits
+
+
 def load_rates():
     sql_statement = "SELECT r.*, ts.brokerName, ts.gameId, ts.powerType FROM ewiis3.rate  r LEFT JOIN ewiis3.tariff_specification ts ON r.tariffSpecificationId = ts.tariffSpecificationId"
     df_rates = execute_sql_query(sql_statement)
