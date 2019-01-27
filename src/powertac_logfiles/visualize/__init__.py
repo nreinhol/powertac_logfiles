@@ -17,3 +17,4 @@ from .orderbook import visualize_orderbook  # noqa
 from .tariff_specification import visualize_tariff_specification  # noqa
 from .customer_stats import visualize_customer_stats  # noqa
 from .order_submit import db_visualize_order_submits  # noqa
+from .prosumption_prediction import db_visualize_prosumption_prediction  # noqa

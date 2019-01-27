@@ -78,3 +78,13 @@ def load_rates():
     sql_statement = "SELECT r.*, ts.brokerName, ts.gameId, ts.powerType FROM ewiis3.rate  r LEFT JOIN ewiis3.tariff_specification ts ON r.tariffSpecificationId = ts.tariffSpecificationId"
     df_rates = execute_sql_query(sql_statement)
     return df_rates
+
+
+def load_prosumption_prediction():
+    # sql_statement = 'SELECT pp.*, dr.totalConsumption, dr.totalProduction FROM (SELECT * FROM ewiis3.distribution_report WHERE distribution_report.gameId="EWIIS3_SPOT_AgentUDE17_TacTex15_cwiBroker_maxon16_1") AS dr RIGHT JOIN (SELECT * FROM ewiis3.prosumption_prediction WHERE prosumption_prediction.game_id="EWIIS3_SPOT_AgentUDE17_TacTex15_cwiBroker_maxon16_1") AS pp ON dr.timeslot = pp.target_timeslot;'
+    try:
+        sql_statement = "SELECT t.* FROM ewiis3.prosumption_prediction t"
+        df_prosumption_prediction = execute_sql_query(sql_statement)
+    except Exception as E:
+        df_prosumption_prediction = pd.DataFrame()
+    return df_prosumption_prediction
