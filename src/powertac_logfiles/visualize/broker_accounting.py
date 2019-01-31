@@ -17,17 +17,20 @@ def visualize_broker_accounting(combine_game_ids=None, box_plot=False):
         results = []
 
         for file in files_to_consider:
-            print('consider broker accounting: {}'.format(file))
+            print('Consider broker accounting: {}'.format(file))
             results.append(create_dataframe_for_single_brokeraccounting(file))
 
         df_plot_broker_accounting_combined = pd.concat(results, ignore_index=True)
+        print('Successfully created big dataframe for {} BrokerAccountings. Ready to plot.'.format(len(results)))
 
         plot_broker_accounting_combined_games(True, combine_game_ids, df_plot_broker_accounting_combined)
-        plot_broker_accounting_combined_games(False, combine_game_ids, df_plot_broker_accounting_combined)
+        # plot_broker_accounting_combined_games(False, combine_game_ids, df_plot_broker_accounting_combined)
 
 
 def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_boxplot):
-    fig = plt.figure(figsize=(40, 30))
+    sns.set(font_scale=4)  # scales all fonts of the plot
+    sns.set_style(style='white')  # removes gray background and adds rigid black border
+    fig = plt.figure(figsize=(40, 40))
     ax1 = fig.add_subplot(111)
     plt.title('Broker Performance Drivers in the Power Tac Competition 2018', fontsize=48)
     plot_type = ''
@@ -35,9 +38,9 @@ def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_box
         g = sns.boxplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot)
         plot_type = 'boxplot'
     else:
-        g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=12)
+        g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=20)
         plot_type = 'swarmplot'
-    g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=30)
+    g.set_xticklabels(g.get_xticklabels(), rotation=90)
     fig.tight_layout()
     visualize.create_path_for_plot('BrokerAccountings', plot_type, combine_game_ids)
     plt.savefig(visualize.create_path_for_plot('BrokerAccountings', plot_type, combine_game_ids))
@@ -104,4 +107,4 @@ def create_dataframe_for_single_brokeraccounting(file_name):
 
 
 if __name__ == '__main__':
-    visualize_broker_accounting(combine_game_ids='2018', box_plot=True)
+    visualize_broker_accounting(combine_game_ids='2018_Finals', box_plot=True)
