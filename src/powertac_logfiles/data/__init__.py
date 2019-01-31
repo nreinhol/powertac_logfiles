@@ -22,6 +22,8 @@ from pathlib import Path  # noqa
 # General Constants
 PROJECT_DIR = str(Path(__file__).resolve().parents[3])
 PROCESSED_DATA_PATH = PROJECT_DIR + '/data/processed/'
+# PROCESSED_DATA_PATH = PROJECT_DIR + '/data/test_broker_accountings/'
+# PROCESSED_DATA_PATH = PROJECT_DIR + '/data/Powertac_2018/'
 
 # Constants for local processing
 LOCAL_LOG_DATA_PATH = '/home/ewiis3/PowerTac/server-distribution/log/'
