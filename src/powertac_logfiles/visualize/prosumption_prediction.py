@@ -11,6 +11,7 @@ def db_visualize_prosumption_prediction(combine_game_ids):
 
     if df_prosumption_prediction.empty or df_distribution_report.empty:
         print('can not create total_grid_prediction_performance plot because prediction data or distribution report data is missing in database.')
+        return
 
     fig = plt.figure(figsize=(15, 20))
     ax1 = fig.add_subplot(211)
