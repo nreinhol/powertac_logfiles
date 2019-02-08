@@ -24,7 +24,7 @@ def visualize_broker_accounting(combine_game_ids=None, box_plot=False):
         print('Successfully created big dataframe for {} BrokerAccountings. Ready to plot.'.format(len(results)))
 
         plot_broker_accounting_combined_games(True, combine_game_ids, df_plot_broker_accounting_combined)
-        # plot_broker_accounting_combined_games(False, combine_game_ids, df_plot_broker_accounting_combined)
+        plot_broker_accounting_combined_games(False, combine_game_ids, df_plot_broker_accounting_combined)
 
 
 def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_boxplot):
