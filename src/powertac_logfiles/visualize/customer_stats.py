@@ -35,9 +35,13 @@ def __parse_customer_stats_file(file_name):
 
 
 def plot_customer_stats(df_customer_stats, game_suffix):
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     ax1 = fig.add_subplot(111)
     g = sns.swarmplot(ax=ax1, x="powerType", y="size", data=df_customer_stats, size=12)
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('customer_stats', '', game_suffix))
     print("Successfully created customer stats plot.")

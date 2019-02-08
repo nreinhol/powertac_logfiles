@@ -45,6 +45,8 @@ def plot_tariff_specifiations(df_tariff_specifications, game_id):
 
     for power_type in power_types:
         df_plot = df_tariff_specifications[df_tariff_specifications['powerType'] == power_type]
+        sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+        sns.set_style(style=visualize.FIGURE_STYLE)
         fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
         ax1 = fig.add_subplot(511)
         ax1.set_title("Periodic Payment")
@@ -74,7 +76,10 @@ def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
     df_tariff_specifications['usage_count'] = 1
     df_tariff_specifications_grouped = df_tariff_specifications[['brokerName', 'powerType', 'usage_count']].groupby(['brokerName', 'powerType'], as_index=False).sum()
 
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     ax1 = fig.add_subplot(111)
     g = sns.swarmplot(ax=ax1,
                       x='powerType',
@@ -82,7 +87,7 @@ def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
                       hue='brokerName',
                       size=10,
                       data=df_tariff_specifications_grouped)
-    g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=12)
+    g.set_xticklabels(g.get_xticklabels(), rotation=90)
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('tariff_type_usage', '', game_id), bbox_inches="tight")
 
@@ -103,7 +108,10 @@ def plot_rates_of_brokers(df_rates, game_id):
 
         df_time_of_use = df_plot[df_plot['dailyBegin'] > -1]
 
+        sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+        sns.set_style(style=visualize.FIGURE_STYLE)
         fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
         ax1 = fig.add_subplot(211)
         ax1.set_title("Rates dependent on daily hour")
         g = sns.scatterplot(ax=ax1,

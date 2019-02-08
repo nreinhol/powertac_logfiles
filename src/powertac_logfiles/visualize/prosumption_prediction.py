@@ -12,6 +12,8 @@ def db_visualize_prosumption_prediction(combine_game_ids):
         print('can not create total_grid_prediction_performance plot because prediction data or distribution report data is missing in database.')
         return
 
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
 
     ax1 = fig.add_subplot(211)

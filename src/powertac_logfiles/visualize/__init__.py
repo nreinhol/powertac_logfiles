@@ -20,5 +20,7 @@ from .order_submit import db_visualize_order_submits  # noqa
 from .prosumption_prediction import db_visualize_prosumption_prediction  # noqa
 
 
-FIGSIZE_LANDSCAPE = (30, 20)  # (width, height) in 100 px
+FIGSIZE_LANDSCAPE = (42, 28)  # (width, height) in 100 px
 FIGSIZE_PORTRAIT = (20, 30)  # (width, height) in 100 px
+FIGURE_FONT_SCALE = 2.5  # scales all fonts of the plot
+FIGURE_STYLE = 'white'  # removes gray background and adds rigid black border

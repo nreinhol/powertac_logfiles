@@ -10,6 +10,8 @@ def visualize_weather():
         print("Error: cannot visualize weather data, because data is empty")
         return
 
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(311)
     ax1.set_title("Temperature")

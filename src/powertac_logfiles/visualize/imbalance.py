@@ -26,6 +26,8 @@ def visualize_imbalance(combine_game_ids):
 
 
 def plot_imbalance(df_imbalance, game_suffix):
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     # fig.suptitle("Imbalance", fontsize=16)
 
@@ -71,16 +73,22 @@ def plot_imbalance_database(combine_game_ids):
 
 
 def plot_imbalance_histogram(df_balance_report, game_suffix):
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     ax1 = fig.add_subplot(311)
     ax1.set_title("netImbalance")
     ax1 = sns.lineplot(x="timeslotIndex", y="netImbalance", data=df_balance_report)
+
     ax2 = fig.add_subplot(312)
     ax2.set_title("netImbalance")
     g = sns.distplot(df_balance_report['netImbalance'], bins=100, color='#14779b')
+
     ax3 = fig.add_subplot(313)
     ax3.set_title("netImbalance")
     g = sns.boxplot(x=df_balance_report['netImbalance'])
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('imbalance', 'db', game_suffix))
     print("Successfully created imbalance plot.")
@@ -88,14 +96,20 @@ def plot_imbalance_histogram(df_balance_report, game_suffix):
 
 def plot_balancing_transactions():
     df_balancing_transactions = data.load_balancing_transactions()
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     # fig.suptitle("Imbalance", fontsize=16)
     ax1 = fig.add_subplot(211)
     ax1.set_title("kWh")
+
     ax1 = sns.lineplot(x="postedTimeslot", y="kWh", data=df_balancing_transactions)
     ax2 = fig.add_subplot(212)
     ax2.set_title("Charge")
+
     ax2 = sns.lineplot(x="postedTimeslot", y="charge", data=df_balancing_transactions)
     fig.tight_layout()
+
     plt.savefig('{}/imbalance/balancing_transactions'.format(data.OUTPUT_DIR))
     print("Successfully created balancing transaction plot.")

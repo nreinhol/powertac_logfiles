@@ -26,10 +26,15 @@ def visualize_total_costs(combine_game_ids):
 def plot_total_costs(df_costs, game_suffix):
     df_costs_transformed = df_costs.melt(id_vars=['broker-name'], var_name='cost', value_name='value')
     df_costs_transformed['value'] = pd.to_numeric(df_costs_transformed['value'])
+
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     ax1 = fig.add_subplot(111)
     # ax = sns.barplot(x="cost", y="value", hue="broker-name", data=df_costs_transformed)
     g = sns.swarmplot(ax=ax1, x="cost", y="value", hue='broker-name', data=df_costs_transformed, size=12)
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('total_costs', '', game_suffix))
     print("Successfully created total costs plot.")

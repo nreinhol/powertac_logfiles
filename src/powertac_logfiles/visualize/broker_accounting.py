@@ -26,11 +26,11 @@ def visualize_broker_accounting(combine_game_ids=None, box_plot=False):
 
 
 def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_boxplot):
-    sns.set(font_scale=4)  # scales all fonts of the plot
-    sns.set_style(style='white')  # removes gray background and adds rigid black border
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
-    plt.title('Broker Performance Drivers in the Power Tac Competition 2018', fontsize=48)
+    plt.title('Broker Performance Drivers', fontsize=48)
     plot_type = ''
     if box_plot:
         g = sns.boxplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot)

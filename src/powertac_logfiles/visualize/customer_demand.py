@@ -23,11 +23,15 @@ def visualize_customer_demand(combine_game_ids):
     # plot_all_customer_demand_curves(df_tariff_transactions)
 
 def plot_total_demand(df_tariff_transactions, game_suffix):
-    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
-    # fig.suptitle("Imbalance", fontsize=16)
     if df_tariff_transactions.empty:
         print('ERROR: no tariff specification data for game {} stored in db.'.format(game_suffix))
         return
+
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
+    # fig.suptitle("Imbalance", fontsize=16)
 
     df_grouped = df_tariff_transactions[['postedTimeslotIndex', 'kWh', 'gameId', 'powerType']].groupby(by=['postedTimeslotIndex', 'powerType', 'gameId'], as_index=False).sum()
     ax1 = fig.add_subplot(211)
@@ -53,7 +57,10 @@ def plot_total_demand(df_tariff_transactions, game_suffix):
 
 
 def plot_total_share(df_tariff_transactions, game_suffix):
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     # fig.suptitle("Imbalance", fontsize=16)
     df_grouped = df_tariff_transactions[['customerName', 'kWh', 'powerType']].groupby(by=['customerName', 'powerType'], as_index=False).sum()
     df_grouped['kWh'] = df_grouped['kWh'].apply(lambda x: abs(x))
@@ -63,12 +70,13 @@ def plot_total_share(df_tariff_transactions, game_suffix):
     ax1 = fig.add_subplot(211)
     ax1.set_title("Customer sum kWh")
     ax1 = sns.boxplot(ax=ax1, x="customerName", y="kWh", hue='powerType', data=df_filtered[['customerName', 'kWh', 'powerType']])
-    ax1.set_xticklabels(ax1.get_xticklabels(), rotation=90, fontsize=15)
+    ax1.set_xticklabels(ax1.get_xticklabels(), rotation=90)
 
     ax2 = fig.add_subplot(212)
     ax2.set_title("Customer avg Count")
     ax2 = sns.boxplot(ax=ax2, x="customerName", y="currentSubscribedPopulation", hue='powerType', data=df_filtered[['customerName', 'currentSubscribedPopulation', 'powerType']])
-    ax2.set_xticklabels(ax2.get_xticklabels(), rotation=90, fontsize=15)
+    ax2.set_xticklabels(ax2.get_xticklabels(), rotation=90)
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('consumption_customer_contribution', 'db', game_suffix))
     print('Successfully created total demand share plot.')
@@ -86,17 +94,24 @@ def plot_all_customer_demand_curves(df_tariff_transactions):
             customerName = ''.join(customerNames)
             df_powertype_per_customer['kWh_per_customer'] = df_powertype_per_customer['kWh'] / df_powertype_per_customer[
                 'currentSubscribedPopulation']
+
+            sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+            sns.set_style(style=visualize.FIGURE_STYLE)
             fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
             # fig.suptitle("Imbalance", fontsize=16)
+
             ax1 = fig.add_subplot(311)
             ax1.set_title("Customer total kWh")
             ax1 = sns.lineplot(ax=ax1, x="postedTimeslotIndex", y="kWh", hue='txType', data=df_powertype_per_customer)
+
             ax2 = fig.add_subplot(312)
             ax2.set_title("kWh per unit of subscribed population")
             ax2 = sns.lineplot(ax=ax2, x="postedTimeslotIndex", y="kWh_per_customer",  hue='txType', data=df_powertype_per_customer)
+
             ax3 = fig.add_subplot(313)
             ax3.set_title("Count Subscribed Population")
             ax3 = sns.lineplot(ax=ax3, x="postedTimeslotIndex", y="currentSubscribedPopulation",  hue='txType', data=df_powertype_per_customer)
+
             fig.tight_layout()
             plt.savefig('{}/demand/{}_{}_{}'.format(data.OUTPUT_DIR, customerId, customerName, powertype))
             # df_powertype_per_customer.to_csv('{}/demand/csv/{}_{}_{}.csv'.format(data.OUTPUT_DIR, customerId, customerName, powertype))

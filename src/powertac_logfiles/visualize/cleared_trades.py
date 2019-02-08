@@ -26,20 +26,32 @@ def visualize_cleared_trades(combine_game_ids):
 
 
 def plot_cleared_trades(df_cleared_trades_transformed, time_deltas, game_suffix):
+
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     ax1 = fig.add_subplot(211)
     sns.boxplot(x="time_delta", y="mkt_price", data=df_cleared_trades_transformed, order=time_deltas)
+
     ax2 = fig.add_subplot(212)
     sns.boxplot(x="time_delta", y="mkt_qty_MWh", data=df_cleared_trades_transformed, order=time_deltas)
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('cleared_trades', 'time_delta', game_suffix))
     print("Successfully created market price and quantity timedelta boxplot plot.")
 
+
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     ax1 = fig.add_subplot(211)
     sns.boxplot(x="hour_of_day", y="mkt_price", data=df_cleared_trades_transformed, order=[i for i in range(0, 24)])
+
     ax2 = fig.add_subplot(212)
     sns.boxplot(x="hour_of_day", y="mkt_qty_MWh", data=df_cleared_trades_transformed, order=[i for i in range(0, 24)])
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('cleared_trades', 'hour_of_day', game_suffix))
 
@@ -80,10 +92,15 @@ def create_dataframe_for_single_mktPriceStats(file_name, time_deltas):
 
 def visualize_cleared_trades_from_database():
     df_cleared_trades = data.load_cleared_trades()
+
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
     ax1 = fig.add_subplot(111)
     sns.scatterplot(ax=ax1, x="executionPrice", y="executionMWh",
                     data=df_cleared_trades)
+
     fig.tight_layout()
     plt.savefig('{}/cleared_trades/cleared_trades'.format(data.OUTPUT_DIR))
     print("Successfully created cleared trade plot.")
