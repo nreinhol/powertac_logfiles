@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
-from powertac_logfiles import data
 import seaborn as sns
 
-from powertac_logfiles.visualize import create_path_for_plot
+from powertac_logfiles import data, visualize
 
 
 def visualize_tariff_specification(combine_game_ids):
@@ -46,7 +45,7 @@ def plot_tariff_specifiations(df_tariff_specifications, game_id):
 
     for power_type in power_types:
         df_plot = df_tariff_specifications[df_tariff_specifications['powerType'] == power_type]
-        fig = plt.figure(figsize=(12, 15))
+        fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
         ax1 = fig.add_subplot(511)
         ax1.set_title("Periodic Payment")
         ax1 = sns.scatterplot(x="postedTimeslotIndex", y="periodicPayment", hue='brokerName', data=df_plot, s=100)
@@ -63,7 +62,7 @@ def plot_tariff_specifiations(df_tariff_specifications, game_id):
         ax5.set_title("expiration")
         ax5 = sns.scatterplot(x="postedTimeslotIndex", y="expiration", hue='brokerName', data=df_plot, s=100)
         fig.tight_layout()
-        plt.savefig(create_path_for_plot('tariff_specification', power_type, game_id))
+        plt.savefig(visualize.create_path_for_plot('tariff_specification', power_type, game_id))
 
 
 def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
@@ -75,7 +74,7 @@ def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
     df_tariff_specifications['usage_count'] = 1
     df_tariff_specifications_grouped = df_tariff_specifications[['brokerName', 'powerType', 'usage_count']].groupby(['brokerName', 'powerType'], as_index=False).sum()
 
-    fig = plt.figure(figsize=(15, 10))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
     g = sns.swarmplot(ax=ax1,
                       x='powerType',
@@ -85,7 +84,7 @@ def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
                       data=df_tariff_specifications_grouped)
     g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=12)
     fig.tight_layout()
-    plt.savefig(create_path_for_plot('tariff_type_usage', '', game_id), bbox_inches="tight")
+    plt.savefig(visualize.create_path_for_plot('tariff_type_usage', '', game_id), bbox_inches="tight")
 
 
 def plot_rates_of_brokers(df_rates, game_id):
@@ -104,7 +103,7 @@ def plot_rates_of_brokers(df_rates, game_id):
 
         df_time_of_use = df_plot[df_plot['dailyBegin'] > -1]
 
-        fig = plt.figure(figsize=(25, 15))
+        fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
         ax1 = fig.add_subplot(211)
         ax1.set_title("Rates dependent on daily hour")
         g = sns.scatterplot(ax=ax1,
@@ -123,4 +122,4 @@ def plot_rates_of_brokers(df_rates, game_id):
                           style='weeklyBegin',
                           data=df_no_time_of_use)
         fig.tight_layout()
-        plt.savefig(create_path_for_plot('tariff_rates', power_type, game_id))
+        plt.savefig(visualize.create_path_for_plot('tariff_rates', power_type, game_id))

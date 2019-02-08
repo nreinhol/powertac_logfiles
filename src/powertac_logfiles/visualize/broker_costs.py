@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from powertac_logfiles import data
-from powertac_logfiles import visualize
+from powertac_logfiles import data, visualize
 
 
 def visualize_total_costs(combine_game_ids):
@@ -27,7 +26,7 @@ def visualize_total_costs(combine_game_ids):
 def plot_total_costs(df_costs, game_suffix):
     df_costs_transformed = df_costs.melt(id_vars=['broker-name'], var_name='cost', value_name='value')
     df_costs_transformed['value'] = pd.to_numeric(df_costs_transformed['value'])
-    fig = plt.figure(figsize=(15, 10))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
     # ax = sns.barplot(x="cost", y="value", hue="broker-name", data=df_costs_transformed)
     g = sns.swarmplot(ax=ax1, x="cost", y="value", hue='broker-name', data=df_costs_transformed, size=12)

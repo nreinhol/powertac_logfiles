@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-from powertac_logfiles import data
+
+from powertac_logfiles import data, visualize
 
 
 def visualize_weather():
@@ -9,7 +10,7 @@ def visualize_weather():
         print("Error: cannot visualize weather data, because data is empty")
         return
 
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(311)
     ax1.set_title("Temperature")
     ax1 = sns.lineplot(ax=ax1, x="timeslotIndex", y="temperature", data=df_weather_report)
@@ -20,5 +21,6 @@ def visualize_weather():
     ax3.set_title("Wind Speed")
     ax3 = sns.barplot(ax=ax3, x="timeslotIndex", y="windSpeed", data=df_weather_report, color='#14779b')
     fig.tight_layout()
-    plt.savefig('{}/weather/weather_report'.format(data.OUTPUT_DIR))
+
+    plt.savefig(visualize.create_path_for_plot('weather', 'db', ''))
     print("Successfully created weather plot.")

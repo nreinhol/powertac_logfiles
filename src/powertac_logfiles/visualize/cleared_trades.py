@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
-from powertac_logfiles import data
-from powertac_logfiles import visualize
-import os
 import pandas as pd
 import seaborn as sns
+
+from powertac_logfiles import data, visualize
 
 
 def visualize_cleared_trades(combine_game_ids):
@@ -27,7 +26,7 @@ def visualize_cleared_trades(combine_game_ids):
 
 
 def plot_cleared_trades(df_cleared_trades_transformed, time_deltas, game_suffix):
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(211)
     sns.boxplot(x="time_delta", y="mkt_price", data=df_cleared_trades_transformed, order=time_deltas)
     ax2 = fig.add_subplot(212)
@@ -36,7 +35,7 @@ def plot_cleared_trades(df_cleared_trades_transformed, time_deltas, game_suffix)
     plt.savefig(visualize.create_path_for_plot('cleared_trades', 'time_delta', game_suffix))
     print("Successfully created market price and quantity timedelta boxplot plot.")
 
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(211)
     sns.boxplot(x="hour_of_day", y="mkt_price", data=df_cleared_trades_transformed, order=[i for i in range(0, 24)])
     ax2 = fig.add_subplot(212)
@@ -47,7 +46,7 @@ def plot_cleared_trades(df_cleared_trades_transformed, time_deltas, game_suffix)
     print("Successfully created market price and quantity hour of day boxplot plot.")
 
     df_cleared_trades_transformed['time_delta'] = pd.to_numeric(df_cleared_trades_transformed['time_delta'])
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(211)
     sns.scatterplot(ax=ax1, x="mkt_price", y="mkt_qty_MWh", hue='hour_of_day', palette="ch:r=-.2,d=.3_r",
                     data=df_cleared_trades_transformed)
@@ -81,7 +80,7 @@ def create_dataframe_for_single_mktPriceStats(file_name, time_deltas):
 
 def visualize_cleared_trades_from_database():
     df_cleared_trades = data.load_cleared_trades()
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
     sns.scatterplot(ax=ax1, x="executionPrice", y="executionMWh",
                     data=df_cleared_trades)

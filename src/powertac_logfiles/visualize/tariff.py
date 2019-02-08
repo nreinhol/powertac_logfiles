@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
-from powertac_logfiles import data
-from powertac_logfiles import visualize
-import os
 import pandas as pd
 import seaborn as sns
+
+from powertac_logfiles import data, visualize
 
 
 def visualize_tariff_mkt_share(combine_game_ids):
@@ -26,7 +25,7 @@ def visualize_tariff_mkt_share(combine_game_ids):
 
 
 def plot_tariff_mkt_share(df_tariff_mkt_share_transformed, game_suffix):
-    fig = plt.figure()
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax = sns.lineplot(x="ts", y="tariff_subscriptions", hue="broker", data=df_tariff_mkt_share_transformed)
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('TariffMktShare', '', game_suffix))

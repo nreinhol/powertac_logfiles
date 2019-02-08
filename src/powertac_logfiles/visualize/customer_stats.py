@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from powertac_logfiles import visualize
-from powertac_logfiles import data
+from powertac_logfiles import visualize, data
 
 
 def visualize_customer_stats(combine_game_ids):
@@ -36,7 +35,7 @@ def __parse_customer_stats_file(file_name):
 
 
 def plot_customer_stats(df_customer_stats, game_suffix):
-    fig = plt.figure(figsize=(20, 10))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
     g = sns.swarmplot(ax=ax1, x="powerType", y="size", data=df_customer_stats, size=12)
     fig.tight_layout()

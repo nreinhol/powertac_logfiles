@@ -1,12 +1,13 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-from powertac_logfiles import data
+
+from powertac_logfiles import data, visualize
 
 
 def visualize_capacity_transactions():
     df_capacity_transactions = data.load_capacity_transactions()
 
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(311)
     ax1.set_title("kWh")
     ax1 = sns.lineplot(ax=ax1, x="peakTimeslot", y="kWh", data=df_capacity_transactions, color='#14779b')

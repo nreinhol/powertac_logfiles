@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
-import os
 import pandas as pd
 import seaborn as sns
 
-from powertac_logfiles import data
-from powertac_logfiles import visualize
+from powertac_logfiles import data, visualize
 
 
 def visualize_imbalance(combine_game_ids):
@@ -28,7 +26,7 @@ def visualize_imbalance(combine_game_ids):
 
 
 def plot_imbalance(df_imbalance, game_suffix):
-    fig = plt.figure(figsize=(15, 25))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     # fig.suptitle("Imbalance", fontsize=16)
 
     ax1 = fig.add_subplot(411)
@@ -73,7 +71,7 @@ def plot_imbalance_database(combine_game_ids):
 
 
 def plot_imbalance_histogram(df_balance_report, game_suffix):
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(311)
     ax1.set_title("netImbalance")
     ax1 = sns.lineplot(x="timeslotIndex", y="netImbalance", data=df_balance_report)
@@ -90,7 +88,7 @@ def plot_imbalance_histogram(df_balance_report, game_suffix):
 
 def plot_balancing_transactions():
     df_balancing_transactions = data.load_balancing_transactions()
-    fig = plt.figure(figsize=(12, 15))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     # fig.suptitle("Imbalance", fontsize=16)
     ax1 = fig.add_subplot(211)
     ax1.set_title("kWh")

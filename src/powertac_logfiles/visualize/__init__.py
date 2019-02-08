@@ -18,3 +18,7 @@ from .tariff_specification import visualize_tariff_specification  # noqa
 from .customer_stats import visualize_customer_stats  # noqa
 from .order_submit import db_visualize_order_submits  # noqa
 from .prosumption_prediction import db_visualize_prosumption_prediction  # noqa
+
+
+FIGSIZE_LANDSCAPE = (30, 20)  # (width, height) in 100 px
+FIGSIZE_PORTRAIT = (20, 30)  # (width, height) in 100 px

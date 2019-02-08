@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
-from powertac_logfiles import data
-from powertac_logfiles import visualize
-import os
 import pandas as pd
 import seaborn as sns
-import numpy as np
+
+from powertac_logfiles import data, visualize
 
 def visualize_broker_accounting(combine_game_ids=None, box_plot=False):
     files_to_consider = visualize.get_relevant_file_paths('BrokerAccounting', combine_game_ids)
@@ -30,7 +28,7 @@ def visualize_broker_accounting(combine_game_ids=None, box_plot=False):
 def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_boxplot):
     sns.set(font_scale=4)  # scales all fonts of the plot
     sns.set_style(style='white')  # removes gray background and adds rigid black border
-    fig = plt.figure(figsize=(40, 40))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
     plt.title('Broker Performance Drivers in the Power Tac Competition 2018', fontsize=48)
     plot_type = ''
@@ -48,7 +46,7 @@ def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_box
 
 
 def plot_broker_accounting(df_broker_accounting_transformed_grouped, file_name):
-    fig = plt.figure(figsize=(15, 10))
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
     g = sns.swarmplot(ax=ax1,
                       x='performance_driver',
