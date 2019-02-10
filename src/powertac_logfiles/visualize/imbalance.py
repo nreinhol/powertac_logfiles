@@ -28,7 +28,7 @@ def visualize_imbalance(combine_game_ids):
 def plot_imbalance(df_imbalance, game_suffix):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
-    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
     # fig.suptitle("Imbalance", fontsize=16)
 
     ax1 = fig.add_subplot(411)

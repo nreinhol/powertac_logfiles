@@ -47,22 +47,23 @@ def plot_tariff_specifiations(df_tariff_specifications, game_id):
         df_plot = df_tariff_specifications[df_tariff_specifications['powerType'] == power_type]
         sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
         sns.set_style(style=visualize.FIGURE_STYLE)
-        fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+        fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
+
         ax1 = fig.add_subplot(511)
         ax1.set_title("Periodic Payment")
-        ax1 = sns.scatterplot(x="postedTimeslotIndex", y="periodicPayment", hue='brokerName', data=df_plot, s=100)
+        ax1 = sns.scatterplot(x="postedTimeslotIndex", y="periodicPayment", hue='brokerName', data=df_plot, s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         ax2 = fig.add_subplot(512)
         ax2.set_title("earlyWithdrawPayment")
-        ax2 = sns.scatterplot(x="postedTimeslotIndex", y="earlyWithdrawPayment", hue='brokerName', data=df_plot, s=100)
+        ax2 = sns.scatterplot(x="postedTimeslotIndex", y="earlyWithdrawPayment", hue='brokerName', data=df_plot, s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         ax3 = fig.add_subplot(513)
         ax3.set_title("signupPayment")
-        ax3 = sns.scatterplot(x="postedTimeslotIndex", y="signupPayment", hue='brokerName', data=df_plot, s=100)
+        ax3 = sns.scatterplot(x="postedTimeslotIndex", y="signupPayment", hue='brokerName', data=df_plot, s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         ax4 = fig.add_subplot(514)
         ax4.set_title("minDuration")
-        ax4 = sns.scatterplot(x="postedTimeslotIndex", y="minDuration", hue='brokerName', data=df_plot, s=100)
+        ax4 = sns.scatterplot(x="postedTimeslotIndex", y="minDuration", hue='brokerName', data=df_plot, s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         ax5 = fig.add_subplot(515)
         ax5.set_title("expiration")
-        ax5 = sns.scatterplot(x="postedTimeslotIndex", y="expiration", hue='brokerName', data=df_plot, s=100)
+        ax5 = sns.scatterplot(x="postedTimeslotIndex", y="expiration", hue='brokerName', data=df_plot, s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         fig.tight_layout()
         plt.savefig(visualize.create_path_for_plot('tariff_specification', power_type, game_id))
 
@@ -85,7 +86,7 @@ def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
                       x='powerType',
                       y='usage_count',
                       hue='brokerName',
-                      size=10,
+                      size=visualize.MARKER_SIZE_OF_SWARMPLOT,
                       data=df_tariff_specifications_grouped)
     g.set_xticklabels(g.get_xticklabels(), rotation=90)
     fig.tight_layout()
@@ -119,7 +120,8 @@ def plot_rates_of_brokers(df_rates, game_id):
                           y='minValueMoney',
                           hue='brokerName',
                           style='weeklyBegin',
-                          data=df_time_of_use)
+                          data=df_time_of_use,
+                            s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         df_no_time_of_use = df_plot[df_plot['dailyBegin'] == -1]
         ax2 = fig.add_subplot(212)
         ax2.set_title("Rates independent on daily hour")
@@ -128,6 +130,7 @@ def plot_rates_of_brokers(df_rates, game_id):
                           y='tierThreshold',
                           hue='brokerName',
                           style='weeklyBegin',
-                          data=df_no_time_of_use)
+                          data=df_no_time_of_use,
+                            s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         fig.tight_layout()
         plt.savefig(visualize.create_path_for_plot('tariff_rates', power_type, game_id))

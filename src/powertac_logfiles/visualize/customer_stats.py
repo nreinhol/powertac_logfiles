@@ -40,7 +40,8 @@ def plot_customer_stats(df_customer_stats, game_suffix):
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
 
     ax1 = fig.add_subplot(111)
-    g = sns.swarmplot(ax=ax1, x="powerType", y="size", data=df_customer_stats, size=12)
+    g = sns.swarmplot(ax=ax1, x="powerType", y="size", data=df_customer_stats, size=visualize.MARKER_SIZE_OF_SWARMPLOT)
+    g.set_xticklabels(g.get_xticklabels(), rotation=90)
 
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('customer_stats', '', game_suffix))

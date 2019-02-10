@@ -20,7 +20,11 @@ from .order_submit import db_visualize_order_submits  # noqa
 from .prosumption_prediction import db_visualize_prosumption_prediction  # noqa
 
 
-FIGSIZE_LANDSCAPE = (42, 28)  # (width, height) in 100 px
-FIGSIZE_PORTRAIT = (20, 30)  # (width, height) in 100 px
-FIGURE_FONT_SCALE = 2.5  # scales all fonts of the plot
+FIGSIZE_LANDSCAPE = (40, 30)  # (width, height) in 100 px
+FIGSIZE_PORTRAIT = (30, 40)  # (width, height) in 100 px
+FIGURE_FONT_SCALE = 3  # scales all fonts of the plot
 FIGURE_STYLE = 'white'  # removes gray background and adds rigid black border
+FIGURE_TITLE_FONT_SIZE = 48
+FIGURE_SUBTITLE_FONT_SIZE = 48
+MARKER_SIZE_OF_SCATTERPLOT = 150
+MARKER_SIZE_OF_SWARMPLOT = 30

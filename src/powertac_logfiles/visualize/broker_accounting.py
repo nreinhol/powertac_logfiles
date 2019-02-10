@@ -30,13 +30,13 @@ def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_box
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     ax1 = fig.add_subplot(111)
-    plt.title('Broker Performance Drivers', fontsize=48)
+    plt.title('Broker Performance Drivers', fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
     plot_type = ''
     if box_plot:
         g = sns.boxplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot)
         plot_type = 'boxplot'
     else:
-        g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=20)
+        g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=visualize.MARKER_SIZE_OF_SWARMPLOT)
         plot_type = 'swarmplot'
     g.set_xticklabels(g.get_xticklabels(), rotation=90)
     fig.tight_layout()
