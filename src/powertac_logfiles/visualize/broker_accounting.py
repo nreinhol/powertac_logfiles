@@ -38,6 +38,8 @@ def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_box
     else:
         g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=visualize.MARKER_SIZE_OF_SWARMPLOT)
         plot_type = 'swarmplot'
+        ax1.legend(markerscale=visualize.MARKER_SCALE)
+
     g.set_xticklabels(g.get_xticklabels(), rotation=90)
     fig.tight_layout()
     visualize.create_path_for_plot('BrokerAccountings', plot_type, combine_game_ids)

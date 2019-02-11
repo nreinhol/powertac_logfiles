@@ -35,6 +35,8 @@ def plot_total_costs(df_costs, game_suffix):
     # ax = sns.barplot(x="cost", y="value", hue="broker-name", data=df_costs_transformed)
     g = sns.swarmplot(ax=ax1, x="cost", y="value", hue='broker-name', data=df_costs_transformed, size=visualize.MARKER_SIZE_OF_SWARMPLOT)
 
+    ax1.legend(markerscale=visualize.MARKER_SCALE)
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('total_costs', '', game_suffix))
     print("Successfully created total costs plot.")

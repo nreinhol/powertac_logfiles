@@ -31,6 +31,8 @@ def plot_tariff_mkt_share(df_tariff_mkt_share_transformed, game_suffix):
 
     ax = sns.lineplot(x="ts", y="tariff_subscriptions", hue="broker", data=df_tariff_mkt_share_transformed)
 
+    ax.legend(markerscale=visualize.MARKER_SCALE)
+
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('TariffMktShare', '', game_suffix))
     print("Successfully created tariff market share plot.")
