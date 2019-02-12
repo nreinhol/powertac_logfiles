@@ -31,30 +31,23 @@ def plot_imbalance(df_imbalance, game_suffix):
     fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
     # fig.suptitle("Imbalance", fontsize=16)
 
-    ax1 = fig.add_subplot(411)
-    ax1.set_title("Net Demand")
-    ax1 = sns.lineplot(x="timeslot", y="netDemand", hue="broker", data=df_imbalance)
+    ax1 = fig.add_subplot(311)
+    ax1.set_title("Imbalance")
+    ax1 = sns.lineplot(x="timeslot", y="imbalance", hue="broker", data=df_imbalance)
     ax1.legend(markerscale=visualize.MARKER_SCALE)
 
-    ax2 = fig.add_subplot(412)
-    ax2.set_title("Imbalance")
-    ax2 = sns.lineplot(x="timeslot", y="imbalance", hue="broker", data=df_imbalance)
+    ax2 = fig.add_subplot(312)
+    ax2.set_title("Imbalance Cost")
+    ax2 = sns.lineplot(x="timeslot", y="imbalanceCost", hue="broker", data=df_imbalance)
     ax2.legend(markerscale=visualize.MARKER_SCALE)
 
-    ax3 = fig.add_subplot(413)
-    ax3.set_title("Imbalance Cost")
-    ax3 = sns.lineplot(x="timeslot", y="imbalanceCost", hue="broker", data=df_imbalance)
-    ax3.legend(markerscale=visualize.MARKER_SCALE)
+    ax3 = fig.add_subplot(313)
+    df_balancing_report = data.load_balance_report()
+    df_balancing_report.rename(columns={'timeslotIndex': 'timeslot'}, inplace=True)
 
-    ax4 = fig.add_subplot(414)
-    df_distribution_reports = data.load_distribution_reports()
-    df_plot = df_distribution_reports.drop('gameId', 1).melt(id_vars=['balanceReportId', 'timeslot'], var_name='type', value_name='kWh')
-    df_all_production_plot = df_plot[df_plot['type'] == 'totalProduction']
-    ax4 = sns.lineplot(ax=ax4, x="timeslot", y="kWh", data=df_all_production_plot, label='total grid Customers Production', color='#e8483b')
-    df_all_consumption_plot = df_plot[df_plot['type'] == 'totalConsumption']
-    df_all_consumption_plot['kWh'] = -1 * df_all_consumption_plot['kWh']
-    ax4 = sns.lineplot(ax=ax4, x="timeslot", y="kWh", data=df_all_consumption_plot, label='total grid Consumption', color='#14779b')
-    ax4.legend(markerscale=visualize.MARKER_SCALE)
+    ax3.set_title("Imbalance of total grid")
+    ax3 = sns.lineplot(x="timeslot", y="netImbalance", data=df_balancing_report)
+    ax3.legend(markerscale=visualize.MARKER_SCALE)
 
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('imbalance', 'logfileAndDb', game_suffix))
