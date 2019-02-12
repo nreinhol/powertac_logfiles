@@ -28,6 +28,8 @@ def plot_tariff_mkt_share(df_tariff_mkt_share_transformed, game_suffix):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+    # plt.title('Tariff Market Share', fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
+    # fig.suptitle("Tariff Market Share",  fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
 
     ax = sns.lineplot(x="ts", y="tariff_subscriptions", hue="broker", data=df_tariff_mkt_share_transformed)
 

@@ -48,6 +48,8 @@ def plot_tariff_specifiations(df_tariff_specifications, game_id):
         sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
         sns.set_style(style=visualize.FIGURE_STYLE)
         fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
+        # plt.title('Tariff Specification for {}'.format(power_type), fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
+        # fig.suptitle('Tariff Specification for {}'.format(power_type), fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
 
         ax1 = fig.add_subplot(511)
         ax1.set_title("Periodic Payment")
@@ -85,6 +87,8 @@ def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+    # plt.title('Published Tariffs', fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
+    # fig.suptitle('Published Tariffs',  fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
 
     ax1 = fig.add_subplot(111)
     g = sns.swarmplot(ax=ax1,
@@ -120,6 +124,8 @@ def plot_rates_of_brokers(df_rates, game_id):
         sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
         sns.set_style(style=visualize.FIGURE_STYLE)
         fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+        # plt.title('Rates for {}'.format(power_type), fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
+        # fig.suptitle('Rates for {}'.format(power_type), fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
 
         ax1 = fig.add_subplot(211)
         ax1.set_title("Rates dependent on daily hour")
@@ -142,5 +148,6 @@ def plot_rates_of_brokers(df_rates, game_id):
                           data=df_no_time_of_use,
                             s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         ax2.legend(markerscale=visualize.MARKER_SCALE)
+
         fig.tight_layout()
         plt.savefig(visualize.create_path_for_plot('tariff_rates', power_type, game_id))

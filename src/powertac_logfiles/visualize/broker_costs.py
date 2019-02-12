@@ -30,6 +30,7 @@ def plot_total_costs(df_costs, game_suffix):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+    # plt.title('Broker Costs', fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
 
     ax1 = fig.add_subplot(111)
     # ax = sns.barplot(x="cost", y="value", hue="broker-name", data=df_costs_transformed)
