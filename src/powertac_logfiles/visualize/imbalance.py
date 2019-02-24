@@ -31,23 +31,34 @@ def plot_imbalance(df_imbalance, game_suffix):
     fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
     # fig.suptitle("Imbalance", fontsize=16)
 
-    ax1 = fig.add_subplot(311)
+    ax1 = fig.add_subplot(411)
     ax1.set_title("Imbalance")
     ax1 = sns.lineplot(x="timeslot", y="imbalance", hue="broker", data=df_imbalance)
-    ax1.legend(markerscale=visualize.MARKER_SCALE)
+    ax1.xaxis.grid(True)  # Show the vertical gridlines
 
-    ax2 = fig.add_subplot(312)
+    ax2 = fig.add_subplot(412)
     ax2.set_title("Imbalance Cost")
     ax2 = sns.lineplot(x="timeslot", y="imbalanceCost", hue="broker", data=df_imbalance)
-    ax2.legend(markerscale=visualize.MARKER_SCALE)
+    ax2.xaxis.grid(True)  # Show the vertical gridlines
 
-    ax3 = fig.add_subplot(313)
+    ax3 = fig.add_subplot(413)
     df_balancing_report = data.load_balance_report()
     df_balancing_report.rename(columns={'timeslotIndex': 'timeslot'}, inplace=True)
 
     ax3.set_title("Imbalance of total grid")
     ax3 = sns.lineplot(x="timeslot", y="netImbalance", data=df_balancing_report)
-    ax3.legend(markerscale=visualize.MARKER_SCALE)
+    ax3.xaxis.grid(True)  # Show the vertical gridlines
+
+    ax4 = fig.add_subplot(414)
+    df_balancing_transactions = data.load_balancing_transactions()
+    df_balancing_transactions.rename(columns={'postedTimeslot': 'timeslot'}, inplace=True)
+
+    ax4.set_title("Balancing Transactions of EWIIS3")
+    sns.lineplot(ax=ax4, x="timeslot", y="kWh", data=df_balancing_transactions)
+    ax41 = ax4.twinx()
+    sns.lineplot(ax=ax41, x="timeslot", y="charge", data=df_balancing_transactions, color='orange')
+
+    ax4.xaxis.grid(True)  # Show the vertical gridlines
 
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('imbalance', 'logfileAndDb', game_suffix))
