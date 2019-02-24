@@ -151,3 +151,25 @@ def plot_rates_of_brokers(df_rates, game_id):
 
         fig.tight_layout()
         plt.savefig(visualize.create_path_for_plot('tariff_rates', power_type, game_id))
+
+
+def visualize_tariff_performance(combine_game_ids):
+    df_tariff_metrics = data.load_tariff_evaluation_metrics()
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+
+    ax1 = fig.add_subplot(211)
+    ax1.set_title("Tariff costs and earnings")
+    ax = sns.barplot(ax=ax1, x="powerType", y="SUM(charge)", hue="txType", data=df_tariff_metrics)
+
+    ax2 = fig.add_subplot(212)
+    ax2.set_title("Total tariff profit")
+    df_pt_profits = df_tariff_metrics[['powerType', 'SUM(charge)']].groupby(by='powerType', as_index=False).sum()
+    sns.barplot(ax=ax2, x="powerType", y="SUM(charge)", data=df_pt_profits)
+
+    ax.legend(markerscale=visualize.MARKER_SCALE)
+
+    fig.tight_layout()
+    plt.savefig(visualize.create_path_for_plot('tariff_evaluation', '', combine_game_ids))
+    print("Successfully created tariff evaluation plot.")

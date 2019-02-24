@@ -74,6 +74,12 @@ def load_order_submits():
     return df_order_submits
 
 
+def load_tariff_evaluation_metrics():
+    sql_statement = "select powerType, txType, SUM(charge), AVG(currentSubscribedPopulation) from ewiis3.tariff_transaktion group by powerType, txType;"
+    df_tariff_evaluation = execute_sql_query(sql_statement)
+    return df_tariff_evaluation
+
+
 def load_rates():
     sql_statement = "SELECT r.*, ts.brokerName, ts.gameId, ts.powerType FROM ewiis3.rate  r LEFT JOIN ewiis3.tariff_specification ts ON r.tariffSpecificationId = ts.tariffSpecificationId"
     df_rates = execute_sql_query(sql_statement)
