@@ -9,7 +9,7 @@ def visualize_customer_stats(combine_game_ids):
     files_to_consider = visualize.get_relevant_file_paths('CustomerStats', combine_game_ids)
     if combine_game_ids == '':
         for file_name in files_to_consider:
-            df_customer_stats = __parse_customer_stats_file(file_name)
+            df_customer_stats = parse_customer_stats_file(file_name)
             game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
             plot_customer_stats(df_customer_stats, game_id + iteration)
     else:
@@ -17,20 +17,22 @@ def visualize_customer_stats(combine_game_ids):
 
         for file in files_to_consider:
             print('consider imbalance cost files: {}'.format(file))
-            results.append(__parse_customer_stats_file(file))
+            results.append(parse_customer_stats_file(file))
 
         df_for_customer_stats_plot = pd.concat(results, ignore_index=True)
         plot_customer_stats(df_for_customer_stats_plot, combine_game_ids)
 
 
-def __parse_customer_stats_file(file_name):
+def parse_customer_stats_file(file_name):
     df_customer_stats = pd.DataFrame()
+    game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
     with open(data.PROCESSED_DATA_PATH + file_name, 'r') as file_content:
         for line in file_content:
             customer_stats = line.split(':')
             entry = {'powerType': customer_stats[0].strip(), 'size': customer_stats[1].strip()}
             df_customer_stats = df_customer_stats.append(entry, ignore_index=True)
     df_customer_stats['size'] = pd.to_numeric(df_customer_stats['size'])
+    df_customer_stats['game_id'] = game_id + iteration
     return df_customer_stats
 
 

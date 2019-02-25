@@ -157,18 +157,22 @@ def visualize_tariff_performance(combine_game_ids):
     df_tariff_metrics = data.load_tariff_evaluation_metrics()
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
-    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
 
     ax1 = fig.add_subplot(211)
     ax1.set_title("Tariff costs and earnings")
-    ax = sns.barplot(ax=ax1, x="powerType", y="SUM(charge)", hue="txType", data=df_tariff_metrics)
+    g = sns.barplot(ax=ax1, x="powerType", y="SUM(charge)", hue="txType", data=df_tariff_metrics)
+    g.set_xticklabels(g.get_xticklabels(), rotation=90)
 
     ax2 = fig.add_subplot(212)
     ax2.set_title("Total tariff profit")
     df_pt_profits = df_tariff_metrics[['powerType', 'SUM(charge)']].groupby(by='powerType', as_index=False).sum()
-    sns.barplot(ax=ax2, x="powerType", y="SUM(charge)", data=df_pt_profits)
+    g = sns.barplot(ax=ax2, x="powerType", y="SUM(charge)", data=df_pt_profits)
+    g.set_xticklabels(g.get_xticklabels(), rotation=90)
 
-    ax.legend(markerscale=visualize.MARKER_SCALE)
+    ax1.legend(markerscale=visualize.MARKER_SCALE)
+    ax1.xaxis.grid(True)  # Show the vertical gridlines
+    ax2.xaxis.grid(True)  # Show the vertical gridlines
 
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('tariff_evaluation', '', combine_game_ids))
