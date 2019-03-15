@@ -26,6 +26,12 @@ def load_balance_report():
     return df_balance_report
 
 
+def load_customer_prosumption():
+    sql_statement = 'SELECT postedTimeslotIndex, SUM(kWH) FROM ewiis3.tariff_transaktion WHERE (txType = "CONSUME" OR txType = "PRODUCE") GROUP BY postedTimeslotIndex'
+    df_customer_prosumption = execute_sql_query(sql_statement)
+    return df_customer_prosumption
+
+
 def load_weather_report():
     sql_statement = "SELECT t.* FROM ewiis3.weather_report t"
     df_weather_report = execute_sql_query(sql_statement)
@@ -84,6 +90,18 @@ def load_rates():
     sql_statement = "SELECT r.*, ts.brokerName, ts.gameId, ts.powerType FROM ewiis3.rate  r LEFT JOIN ewiis3.tariff_specification ts ON r.tariffSpecificationId = ts.tariffSpecificationId"
     df_rates = execute_sql_query(sql_statement)
     return df_rates
+
+
+def load_grid_imbalance_prediction():
+    sql_statement = "SELECT t.* FROM ewiis3.imbalance_prediction t"
+    df_imbalance = execute_sql_query(sql_statement)
+    return df_imbalance
+
+
+def load_customer_prosumption_prediction():
+    sql_statement = "SELECT t.* FROM ewiis3.customer_prosumption_prediction t"
+    df_customer_prosumption = execute_sql_query(sql_statement)
+    return df_customer_prosumption
 
 
 def load_prosumption_prediction():

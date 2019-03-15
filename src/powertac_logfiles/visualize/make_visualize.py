@@ -12,6 +12,8 @@ def choose_option(database, combine_game_ids):
         visualize.create_dir_if_not_exists('{}/{}'.format(OUTPUT_DIR, combine_game_ids))
 
     if database == 'Yes':
+        visualize.db_visualize_customer_prosumption_prediction(combine_game_ids)
+        visualize.db_visualize_imbalance_prediction(combine_game_ids)
         visualize.visualize_tariff_performance(combine_game_ids)
         visualize.db_visualize_prosumption_prediction(combine_game_ids)
         visualize.db_visualize_order_submits(combine_game_ids)
