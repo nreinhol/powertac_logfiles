@@ -93,14 +93,20 @@ def load_rates():
 
 
 def load_grid_imbalance_prediction():
-    sql_statement = "SELECT t.* FROM ewiis3.imbalance_prediction t"
-    df_imbalance = execute_sql_query(sql_statement)
+    try:
+        sql_statement = "SELECT t.* FROM ewiis3.imbalance_prediction t"
+        df_imbalance = execute_sql_query(sql_statement)
+    except Exception as E:
+        df_imbalance = pd.DataFrame()
     return df_imbalance
 
 
 def load_customer_prosumption_prediction():
-    sql_statement = "SELECT t.* FROM ewiis3.customer_prosumption_prediction t"
-    df_customer_prosumption = execute_sql_query(sql_statement)
+    try:
+        sql_statement = "SELECT t.* FROM ewiis3.customer_prosumption_prediction t"
+        df_customer_prosumption = execute_sql_query(sql_statement)
+    except Exception as E:
+        df_customer_prosumption = pd.DataFrame()
     return df_customer_prosumption
 
 

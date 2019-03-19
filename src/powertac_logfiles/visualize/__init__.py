@@ -7,6 +7,11 @@ from .utils import get_game_id_from_logfile_name  # noqa
 from .utils import create_dir_if_not_exists  # noqa
 from .utils import create_path_for_plot  # noqa
 from .utils import get_relevant_file_paths  # noqa
+from .utils import calculate_mae  # noqa
+from .utils import calculate_mape  # noqa
+from .utils import calculate_mse  # noqa
+from .utils import calculate_rmse  # noqa
+from .utils import calculate_all_error_measures  # noqa
 from .cleared_trades import visualize_cleared_trades  # noqa
 from .cleared_trades import visualize_cleared_trades_from_database  # noqa
 from .broker_accounting import visualize_broker_accounting  # noqa
@@ -24,7 +29,9 @@ from .prediction_grid_imbalance import db_visualize_imbalance_prediction  # noqa
 from .prediction_customer_prosumption import db_visualize_customer_prosumption_prediction  # noqa
 
 FIGSIZE_LANDSCAPE = (40, 30)  # (width, height) in 100 px
+FIGSIZE_LANDSCAPE_LARGE = (80, 20)  # (width, height) in 100 px
 FIGSIZE_PORTRAIT = (30, 40)  # (width, height) in 100 px
+FIGSIZE_PORTRAIT_LARGE = (30, 60)  # (width, height) in 100 px
 FIGURE_FONT_SCALE = 3  # scales all fonts of the plot
 FIGURE_STYLE = 'white'  # removes gray background and adds rigid black border
 FIGURE_TITLE_FONT_SIZE = 48
