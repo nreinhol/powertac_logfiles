@@ -39,5 +39,5 @@ def plot_total_costs(df_costs, game_suffix):
     ax1.legend(markerscale=visualize.MARKER_SCALE)
 
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('total_costs', '', game_suffix))
+    plt.savefig(visualize.create_path_for_plot('total_costs', '', game_suffix, subfolder='general'))
     print("Successfully created total costs plot.")

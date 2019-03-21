@@ -101,6 +101,16 @@ def load_grid_imbalance_prediction():
     return df_imbalance
 
 
+def load_all_game_ids():
+    try:
+        sql_statement = "SELECT DISTINCT(t.gameId) FROM ewiis3.timeslot t"
+        df_imbalance = execute_sql_query(sql_statement)
+        game_ids = list(df_imbalance['gameId'])
+    except Exception as E:
+        game_ids = []
+    return game_ids
+
+
 def load_customer_prosumption_prediction():
     try:
         sql_statement = "SELECT t.* FROM ewiis3.customer_prosumption_prediction t"

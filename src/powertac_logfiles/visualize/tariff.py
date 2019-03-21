@@ -44,7 +44,7 @@ def plot_tariff_mkt_share(df_tariff_mkt_share_transformed, game_suffix):
     ax3.legend(markerscale=visualize.MARKER_SCALE)
 
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('TariffMktShare', '', game_suffix))
+    plt.savefig(visualize.create_path_for_plot('TariffMktShare', '', game_suffix, subfolder='tariffs'))
     print("Successfully created tariff market share plot.")
 
 

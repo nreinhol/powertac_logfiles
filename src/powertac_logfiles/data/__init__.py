@@ -18,6 +18,7 @@ from .database import load_tariff_evaluation_metrics  # noqa
 from .database import load_grid_imbalance_prediction  # noqa
 from .database import load_customer_prosumption  # noqa
 from .database import load_customer_prosumption_prediction  # noqa
+from .database import load_all_game_ids  # noqa
 from .prepare import filter_on_produce_and_consume  # noqa
 
 from pathlib import Path  # noqa

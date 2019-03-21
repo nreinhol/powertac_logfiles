@@ -21,10 +21,14 @@ def create_dir_if_not_exists(dir_path):
         os.makedirs(dir_path)
 
 
-def create_path_for_plot(topic, suffix, game_id):
+def create_path_for_plot(topic, suffix, game_id, subfolder=None):
+    dir = OUTPUT_DIR
+    if subfolder:
+        create_dir_if_not_exists('{}/{}'.format(OUTPUT_DIR, subfolder))
+        dir = '{}/{}'.format(OUTPUT_DIR, subfolder)
     if not suffix == '':
         suffix = '_' + suffix
-    return '{}/{}{}_{}'.format(OUTPUT_DIR, topic, suffix, game_id)
+    return '{}/{}{}_{}'.format(dir, topic, suffix, game_id)
 
 
 def get_relevant_file_paths(logfile_type, combine_game_ids):

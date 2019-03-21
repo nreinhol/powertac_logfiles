@@ -24,8 +24,8 @@ from .tariff_specification import visualize_tariff_performance  # noqa
 from .customer_stats import visualize_customer_stats  # noqa
 from .customer_stats import parse_customer_stats_file  # noqa
 from .order_submit import db_visualize_order_submits  # noqa
-from .prosumption_prediction import db_visualize_prosumption_prediction  # noqa
-from .prediction_grid_imbalance import db_visualize_imbalance_prediction  # noqa
+from .prediction_grid_prosumption import db_visualize_grid_prosumption_prediction  # noqa
+from .prediction_grid_imbalance import db_visualize_grid_imbalance_prediction  # noqa
 from .prediction_customer_prosumption import db_visualize_customer_prosumption_prediction  # noqa
 
 FIGSIZE_LANDSCAPE = (40, 30)  # (width, height) in 100 px

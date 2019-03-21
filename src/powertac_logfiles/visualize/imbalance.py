@@ -61,7 +61,7 @@ def plot_imbalance(df_imbalance, game_suffix):
     ax4.xaxis.grid(True)  # Show the vertical gridlines
 
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('imbalance', 'logfileAndDb', game_suffix))
+    plt.savefig(visualize.create_path_for_plot('imbalance', 'logfileAndDb', game_suffix, subfolder='imbalance'))
     print("Successfully created imbalance cost plot.")
 
 
@@ -98,7 +98,7 @@ def plot_imbalance_histogram(df_balance_report, game_suffix):
     g = sns.boxplot(x=df_balance_report['netImbalance'])
 
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('imbalance', 'db', game_suffix))
+    plt.savefig(visualize.create_path_for_plot('grid_imbalance', 'db', game_suffix, subfolder='imbalance'))
     print("Successfully created imbalance plot.")
 
 

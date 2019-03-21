@@ -6,9 +6,9 @@ import numpy as np
 from powertac_logfiles import data, visualize
 
 
-def db_visualize_imbalance_prediction(combine_game_ids):
+def db_visualize_grid_imbalance_prediction(game_id):
     df_balancing_report = data.load_balance_report()
-    df_balancing_report = df_balancing_report[df_balancing_report['gameId'] == "game_1"]
+    df_balancing_report = df_balancing_report[df_balancing_report['gameId'] == game_id]
     df_balancing_report.rename(columns={'timeslotIndex': 'timeslot'}, inplace=True)
     df_imbalance_prediction = data.load_grid_imbalance_prediction()
 
@@ -19,19 +19,15 @@ def db_visualize_imbalance_prediction(combine_game_ids):
     df_imbalance_prediction['actual'] = df_imbalance_prediction.apply(
         lambda row: get_actual_value(row, df_balancing_report), axis=1)
 
-    plot_prediction(df_balancing_report, df_imbalance_prediction, combine_game_ids)
+    plot_prediction(df_balancing_report, df_imbalance_prediction, game_id)
 
     df_imbalance_prediction = calculate_prediction_performance(df_imbalance_prediction)
-    plot_prediction_performance(combine_game_ids, df_imbalance_prediction, show_outliers=False)
-    plot_prediction_performance(combine_game_ids, df_imbalance_prediction, show_outliers=True)
+    plot_prediction_performance(game_id, df_imbalance_prediction, show_outliers=False)
+    plot_prediction_performance(game_id, df_imbalance_prediction, show_outliers=True)
 
 
 def calculate_prediction_performance(df_imbalance_prediction):
-    df_imbalance_prediction['imb_direction_true'] = df_imbalance_prediction.apply(lambda row: correctly_classified(row),
-                                                                                  axis=1)
-    df_grouped = df_imbalance_prediction[['proximity', 'imb_direction_true', 'prediction']].groupby(
-        by=['proximity', 'imb_direction_true'], as_index=False).count()
-    df_grouped.rename(columns={'prediction': 'correct_classified'}, inplace=True)
+    df_imbalance_prediction['imb_direction_true'] = df_imbalance_prediction.apply(lambda row: correctly_classified(row), axis=1)
     ae, se, rse, ape = visualize.calculate_all_error_measures(y_true=df_imbalance_prediction['actual'],
                                                               y_pred=df_imbalance_prediction['prediction'])
     df_imbalance_prediction['ae'] = ae
@@ -41,7 +37,7 @@ def calculate_prediction_performance(df_imbalance_prediction):
     return df_imbalance_prediction
 
 
-def plot_prediction_performance(combine_game_ids, df_imbalance_prediction, show_outliers=False):
+def plot_prediction_performance(game_id, df_imbalance_prediction, show_outliers=False):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
@@ -70,11 +66,11 @@ def plot_prediction_performance(combine_game_ids, df_imbalance_prediction, show_
 
     outliers = "_show_outliers" if show_outliers else ""
 
-    plt.savefig(visualize.create_path_for_plot('prediction_grid_imbalance_performance{}'.format(outliers), 'db', combine_game_ids))
+    plt.savefig(visualize.create_path_for_plot('prediction_grid_imbalance_performance{}'.format(outliers), 'db', game_id, subfolder='prediction'))
     print("Successfully created imbalance prediction performance plot.")
 
 
-def plot_prediction(df_balancing_report, df_imbalance_prediction, combine_game_ids):
+def plot_prediction(df_balancing_report, df_imbalance_prediction, game_id):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_LARGE)
@@ -87,7 +83,7 @@ def plot_prediction(df_balancing_report, df_imbalance_prediction, combine_game_i
                        color='#e8483b')
     ax1 = sns.lineplot(ax=ax1, x="x", y="y", data=pd.DataFrame({'x': [360, 1800], 'y': [0, 0]}), color='black') # x axis
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('prediction_grid_imbalance', 'db', combine_game_ids))
+    plt.savefig(visualize.create_path_for_plot('prediction_grid_imbalance', 'db', game_id, subfolder='prediction'))
     print("Successfully created imbalance prediction plot.")
 
 

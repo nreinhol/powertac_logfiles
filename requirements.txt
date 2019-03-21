@@ -16,6 +16,13 @@ tqdm
 matplotlib
 seaborn
 pymysql
+dash
+dash-html-components
+dash-core-components
+dash-table
+dash-daq
+flask
+sklearn
 
 # dependencies
 pycodestyle==2.3.1

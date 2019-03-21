@@ -46,5 +46,5 @@ def plot_customer_stats(df_customer_stats, game_suffix):
     g.set_xticklabels(g.get_xticklabels(), rotation=90)
 
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('customer_stats', '', game_suffix))
+    plt.savefig(visualize.create_path_for_plot('customer_stats', '', game_suffix, subfolder='general'))
     print("Successfully created customer stats plot.")

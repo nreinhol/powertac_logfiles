@@ -72,7 +72,7 @@ def plot_tariff_specifiations(df_tariff_specifications, game_id):
         ax5 = sns.scatterplot(x="postedTimeslotIndex", y="expiration", hue='brokerName', data=df_plot, s=visualize.MARKER_SIZE_OF_SCATTERPLOT)
         ax5.legend(markerscale=visualize.MARKER_SCALE)
         fig.tight_layout()
-        plt.savefig(visualize.create_path_for_plot('tariff_specification', power_type, game_id))
+        plt.savefig(visualize.create_path_for_plot('tariff_specification', power_type, game_id, subfolder='tariffs'))
 
 
 def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
@@ -102,7 +102,7 @@ def plot_tariff_usage_of_brokers(df_tariff_specifications, game_id):
     ax1.legend(markerscale=visualize.MARKER_SCALE)
 
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('tariff_type_usage', '', game_id), bbox_inches="tight")
+    plt.savefig(visualize.create_path_for_plot('tariff_type_usage', '', game_id, subfolder='tariffs'), bbox_inches="tight")
 
 
 def plot_rates_of_brokers(df_rates, game_id):
@@ -150,7 +150,7 @@ def plot_rates_of_brokers(df_rates, game_id):
         ax2.legend(markerscale=visualize.MARKER_SCALE)
 
         fig.tight_layout()
-        plt.savefig(visualize.create_path_for_plot('tariff_rates', power_type, game_id))
+        plt.savefig(visualize.create_path_for_plot('tariff_rates', power_type, game_id, subfolder='tariffs'))
 
 
 def visualize_tariff_performance(combine_game_ids):
@@ -175,5 +175,5 @@ def visualize_tariff_performance(combine_game_ids):
     ax2.xaxis.grid(True)  # Show the vertical gridlines
 
     fig.tight_layout()
-    plt.savefig(visualize.create_path_for_plot('tariff_evaluation', '', combine_game_ids))
+    plt.savefig(visualize.create_path_for_plot('tariff_evaluation', '', combine_game_ids, subfolder='tariffs'))
     print("Successfully created tariff evaluation plot.")

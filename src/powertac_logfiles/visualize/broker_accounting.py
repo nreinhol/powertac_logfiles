@@ -43,7 +43,7 @@ def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_box
     g.set_xticklabels(g.get_xticklabels(), rotation=90)
     fig.tight_layout()
     visualize.create_path_for_plot('BrokerAccountings', plot_type, combine_game_ids)
-    plt.savefig(visualize.create_path_for_plot('BrokerAccountings', plot_type, combine_game_ids))
+    plt.savefig(visualize.create_path_for_plot('BrokerAccountings', plot_type, combine_game_ids, subfolder='general'))
     print("Successfully created performance drivers {} plot for tournament: {}.".format(plot_type, combine_game_ids))
 
 
@@ -60,7 +60,7 @@ def plot_broker_accounting(df_broker_accounting_transformed_grouped, file_name):
     fig.tight_layout()
     game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
     print("Successfully created performance drivers plot.")
-    plt.savefig(visualize.create_path_for_plot('BrokerAccountings', '', game_id + iteration), bbox_inches="tight")
+    plt.savefig(visualize.create_path_for_plot('BrokerAccountings', '', game_id + iteration, subfolder='general'), bbox_inches="tight")
 
 
 def create_dataframe_for_single_brokeraccounting(file_name):
