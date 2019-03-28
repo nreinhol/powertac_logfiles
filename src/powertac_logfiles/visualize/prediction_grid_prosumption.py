@@ -5,12 +5,13 @@ from powertac_logfiles import data, visualize
 
 
 def db_visualize_grid_prosumption_prediction(game_id):
-    df_prosumption_prediction = data.load_prosumption_prediction()
-    df_distribution_report = data.load_distribution_reports()
+    df_prosumption_prediction = data.load_prosumption_prediction(game_id)
+    df_distribution_report = data.load_distribution_reports(game_id)
 
     if df_prosumption_prediction.empty or df_distribution_report.empty:
         print('Can not create total_grid_prediction_performance plot because prediction data or distribution report data is missing in database.')
         return
+
 
     plot_prediction(df_prosumption_prediction, df_distribution_report, game_id)
 

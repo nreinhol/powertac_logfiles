@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 
 from powertac_logfiles import data, visualize
+import ewiis3DatabaseConnector as db
 
 
 def visualize_imbalance(combine_game_ids):
@@ -42,7 +43,7 @@ def plot_imbalance(df_imbalance, game_suffix):
     ax2.xaxis.grid(True)  # Show the vertical gridlines
 
     ax3 = fig.add_subplot(413)
-    df_balancing_report = data.load_balance_report()
+    df_balancing_report = db.load_balance_report()
     df_balancing_report.rename(columns={'timeslotIndex': 'timeslot'}, inplace=True)
 
     ax3.set_title("Imbalance of total grid")
@@ -50,7 +51,7 @@ def plot_imbalance(df_imbalance, game_suffix):
     ax3.xaxis.grid(True)  # Show the vertical gridlines
 
     ax4 = fig.add_subplot(414)
-    df_balancing_transactions = data.load_balancing_transactions()
+    df_balancing_transactions = db.load_balancing_transactions()
     df_balancing_transactions.rename(columns={'postedTimeslot': 'timeslot'}, inplace=True)
 
     ax4.set_title("Balancing Transactions of EWIIS3")
@@ -66,7 +67,7 @@ def plot_imbalance(df_imbalance, game_suffix):
 
 
 def plot_imbalance_database(combine_game_ids):
-    df_balance_report = data.load_balance_report()
+    df_balance_report = db.load_balance_report(combine_game_ids)
 
     if df_balance_report.empty:
         print('ERROR: no imbalance data for any game stored in db.')
@@ -103,7 +104,7 @@ def plot_imbalance_histogram(df_balance_report, game_suffix):
 
 
 def plot_balancing_transactions():
-    df_balancing_transactions = data.load_balancing_transactions()
+    df_balancing_transactions = db.load_balancing_transactions()
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)

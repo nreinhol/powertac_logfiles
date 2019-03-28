@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 
 from powertac_logfiles import data, visualize
+import ewiis3DatabaseConnector as db
 
 
 def visualize_tariff_mkt_share(combine_game_ids):
@@ -65,7 +66,7 @@ def create_df_for_powerType_shares(combine_game_ids):
     df_for_customer_stats_plot = pd.concat(results, ignore_index=True).rename(
         columns={'size': 'populationSize', 'game_id': 'gameId'})
 
-    df_tariff_subscriptions = data.load_tariff_transactions()
+    df_tariff_subscriptions = db.load_tariff_transactions()
     df_tariff_subscriptions = df_tariff_subscriptions[df_tariff_subscriptions['txType'].isin(['CONSUME', 'PRODUCE'])]
     df_subs_powertype = df_tariff_subscriptions[
         ['currentSubscribedPopulation', 'gameId', 'customerName', 'postedTimeslotIndex', 'txType',

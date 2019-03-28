@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from powertac_logfiles import data, visualize
+from powertac_logfiles import visualize
+import ewiis3DatabaseConnector as data
 
 
 def visualize_tariff_specification(combine_game_ids):

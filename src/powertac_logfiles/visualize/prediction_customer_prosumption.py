@@ -2,13 +2,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 import numpy as np
-from powertac_logfiles import data, visualize
+from powertac_logfiles import visualize
+import ewiis3DatabaseConnector as data
 
 
 def db_visualize_customer_prosumption_prediction(game_id):
-    df_customer_prosumption = data.load_customer_prosumption()
+    df_customer_prosumption = data.load_customer_prosumption(game_id)
     df_customer_prosumption.rename(columns={'postedTimeslotIndex': 'timeslot'}, inplace=True)
-    df_customer_prosumption_prediction = data.load_customer_prosumption_prediction()
+    df_customer_prosumption_prediction = data.load_predictions('customer_prosumption_prediction', game_id)
 
     if df_customer_prosumption.empty or df_customer_prosumption_prediction.empty:
         print('Can not create customer prosumption plot because prediction data or prosumption data is missing in database.')
@@ -30,7 +31,7 @@ def plot_prediction_performance(game_id, df_customer_prosumption_prediction, sho
     fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
     # fig.suptitle("Imbalance", fontsize=16)
     ax2 = fig.add_subplot(511)
-    ax2.set_title("Absolut error of ƒ SARIMAX Prediction")
+    ax2.set_title("Absolut error of SARIMAX Prediction")
     ax2 = sns.boxplot(ax=ax2, x="proximity", y="ae", data=df_customer_prosumption_prediction[['proximity', 'ae']],
                       showfliers=show_outliers)
     ax3 = fig.add_subplot(512)
