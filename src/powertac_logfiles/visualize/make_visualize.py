@@ -16,9 +16,9 @@ def choose_option(database, combine_game_ids):
         game_ids = data.load_all_game_ids()
 
         # visualize per game:
-
         for game_id in game_ids:
             print('start plotting for game id: {}'.format(game_id))
+            visualize.db_visualize_wholesale_price_intervals(game_id)
             visualize.db_visualize_customer_prosumption_prediction(game_id)
             ## visualize.db_visualize_grid_prosumption_prediction(game_id)
             visualize.db_visualize_grid_imbalance_prediction(game_id)
