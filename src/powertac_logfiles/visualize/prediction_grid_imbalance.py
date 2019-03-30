@@ -10,7 +10,7 @@ import ewiis3DatabaseConnector as data
 def db_visualize_grid_imbalance_prediction(game_id):
     df_balancing_report = data.load_balance_report(game_id)
     df_balancing_report.rename(columns={'timeslotIndex': 'timeslot'}, inplace=True)
-    df_imbalance_prediction = data.load_predictions('imbalance_prediction', game_id)
+    df_imbalance_prediction = data.load_predictions('prediction', game_id, 'grid', 'imbalance')
 
     if df_balancing_report.empty or df_imbalance_prediction.empty:
         print('Can not create grid imbalance prediction_performance plot because prediction data or balance report data is missing in database.')
