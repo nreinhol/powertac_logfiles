@@ -2,11 +2,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from powertac_logfiles import data, visualize
+import ewiis3DatabaseConnector as db
 
 
 def db_visualize_grid_prosumption_prediction(game_id):
-    df_prosumption_prediction = data.load_prosumption_prediction(game_id)
-    df_distribution_report = data.load_distribution_reports(game_id)
+    df_prosumption_prediction = db.load_grid_consumption_and_production_prediction(game_id)
+    df_distribution_report = db.load_distribution_reports(game_id)
 
     if df_prosumption_prediction.empty or df_distribution_report.empty:
         print('Can not create total_grid_prediction_performance plot because prediction data or distribution report data is missing in database.')
@@ -77,14 +78,14 @@ def plot_prediction(df_prosumption_prediction, df_distribution_report, game_id):
     palette = sns.color_palette("Blues_d", n_colors=24)
     ax1 = sns.lineplot(ax=ax1, x="target_timeslot", y="prediction", hue='proximity',
                        data=df_prediction_plot, palette=palette)
-    ax1 = sns.lineplot(ax=ax1, x="timeslot", y="kWh", data=df_plot[df_plot['type'] == 'totalConsumption'], label='total grid Consumption', color='#14779b')
+    ax1 = sns.lineplot(x="timeslot", y="kWh", data=df_plot[df_plot['type'] == 'totalConsumption'], label='Grid Consumption', color='#e8483b')
 
     ax2 = fig.add_subplot(212)
     ax2.set_title("SARIMAX Prediction of grid Consumption and Production")
     df_prediction_plot = df_prosumption_prediction[df_prosumption_prediction['type'] == 'production']
     ax2 = sns.lineplot(ax=ax2, x="target_timeslot", y="prediction", hue='proximity',
                        data=df_prediction_plot, palette=palette)
-    ax2 = sns.lineplot(ax=ax2, x="timeslot", y="kWh", data=df_plot[df_plot['type'] == 'totalProduction'], label='total grid Consumption', color='#14779b')
+    ax2 = sns.lineplot(x="timeslot", y="kWh", data=df_plot[df_plot['type'] == 'totalProduction'], label='Grid Production', color='#e8483b')
 
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('prediction_grid_prosumption', 'db', game_id, subfolder='prediction'))
