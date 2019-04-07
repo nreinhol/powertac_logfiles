@@ -8,9 +8,7 @@ import flask
 import pandas as pd
 import os
 
-
 import ewiis3DatabaseConnector as db
-
 
 server = flask.Flask('app')
 server.secret_key = os.environ.get('secret_key', 'secret')
@@ -27,7 +25,8 @@ df_tariff_subscriptions_grouped = df_tariff_subscriptions[
 
 df_tariff_subscriptions_shares = db.load_tariff_subscription_shares()
 
-df_tariff_subscriptions_shares = df_tariff_subscriptions_shares.melt(id_vars=['tariffSubscriptionId', 'gameId', 'timeslotIndex'], var_name='powerType')
+df_tariff_subscriptions_shares = df_tariff_subscriptions_shares.melt(
+    id_vars=['tariffSubscriptionId', 'gameId', 'timeslotIndex'], var_name='powerType')
 
 df_all_offered_tariffs = db.load_tariff_specification_meets_avg_rates()
 
@@ -60,7 +59,6 @@ def generate_table(dataframe, max_rows=100):
     )
 
 
-
 tariff_page = html.Div([
     dcc.Link('Go to Wholesale Market', href='/page-2'),
     dcc.Link('Go to Customer Analysis', href='/page-3'),
@@ -73,7 +71,10 @@ tariff_page = html.Div([
     html.H1('Tariff market share'),
     dcc.Graph(id='tariff-share'),
     html.H1('All offered tariffs'),
-    generate_table(df_all_offered_tariffs[["brokerName", "earlyWithdrawPayment", "minDuration", "periodicPayment", "postedTimeslotIndex", "powerType", "signupPayment", "AVG(minValueMoney)", "AVG(maxValueMoney)", "AVG(maxCurtailment)", "AVG(tierThreshold)", "AVG(downRegulationPayment)", "AVG(upRegulationPayment)", "rateCount"]])
+    generate_table(df_all_offered_tariffs[
+                       ["brokerName", "earlyWithdrawPayment", "minDuration", "periodicPayment", "postedTimeslotIndex",
+                        "powerType", "signupPayment", "AVG(minValueMoney)", "AVG(maxValueMoney)", "AVG(maxCurtailment)",
+                        "AVG(tierThreshold)", "AVG(downRegulationPayment)", "AVG(upRegulationPayment)", "rateCount"]])
 ], className="container")
 
 
@@ -117,6 +118,8 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content')
 ])
+
+
 # Update the index
 @app.callback(dash.dependencies.Output('page-content', 'children'),
               [dash.dependencies.Input('url', 'pathname')])
@@ -129,7 +132,7 @@ def display_page(pathname):
         return customer_page
     else:
         return tariff_page
-    # You could also return a 404 "URL not found" page here
+        # You could also return a 404 "URL not found" page here
 
 
 ####################################################
@@ -156,8 +159,6 @@ wholesale_page = html.Div([
     dcc.Graph(id='wholesale-orders'),
     dcc.Graph(id='cleared-trades')
 ], className="container")
-
-
 
 
 @app.callback(Output('wholesale-quantities', 'figure'),
@@ -195,6 +196,7 @@ def update_graph_wholesale_quantities(proximity_value, game_id_value):
         }
     }
 
+
 @app.callback(Output('wholesale-orders', 'figure'),
               [Input('dropdown-proximity', 'value'), Input('dropdown-game-id', 'value')])
 def update_graph_wholesale_orders(proximity_value, game_id_value):
@@ -225,6 +227,7 @@ def update_graph_wholesale_orders(proximity_value, game_id_value):
             hovermode='closest'
         )
     }
+
 
 @app.callback(Output('cleared-trades', 'figure'),
               [Input('dropdown-proximity', 'value'), Input('dropdown-game-id', 'value')])
@@ -257,7 +260,6 @@ def update_graph_cleared_trades(proximity_value, game_id_value):
     }
 
 
-
 df_tariff_transactions = db.load_tariff_transactions()
 allow = ['PRODUCE', 'CONSUME']
 df_tariff_transactions_prod_con = df_tariff_transactions[df_tariff_transactions['txType'].isin(allow)]
@@ -265,15 +267,16 @@ df_tariff_transactions_prod_con = df_tariff_transactions[df_tariff_transactions[
 # df['kWh_per_customer'] = df['kWh'] / df['currentSubscribedPopulation']
 # df_tariff_transactions_prod_con['kWhPerCustomer'] = df_tariff_transactions_prod_con['kWh'] / df_tariff_transactions_prod_con['currentSubscribedPopulation']
 # df_customer = df_tariff_transactions_prod_con[['kWhPerCustomer', 'customerName', 'postedTimeslotIndex', 'gameId']].groupby(by=['postedTimeslotIndex', 'customerName', 'gameId'], as_index=False).sum()
-df_customer = df_tariff_transactions_prod_con[['kWh', 'customerName', 'postedTimeslotIndex', 'gameId']].groupby(by=['postedTimeslotIndex', 'customerName', 'gameId'], as_index=False).sum()
+df_customer = df_tariff_transactions_prod_con[['kWh', 'customerName', 'postedTimeslotIndex', 'gameId']].groupby(
+    by=['postedTimeslotIndex', 'customerName', 'gameId'], as_index=False).sum()
 
-df_all = df_tariff_transactions_prod_con[['kWh', 'postedTimeslotIndex', 'gameId']].groupby(by=['postedTimeslotIndex', 'gameId'], as_index=False).sum()
+df_all = df_tariff_transactions_prod_con[['kWh', 'postedTimeslotIndex', 'gameId']].groupby(
+    by=['postedTimeslotIndex', 'gameId'], as_index=False).sum()
 
 options = [{'label': 'all', 'value': 'all'}]
 
 for customer in list(df_customer['customerName'].unique()):
     options.append({'label': customer, 'value': customer})
-
 
 ####################################################
 #### Customer Page
@@ -303,11 +306,13 @@ customer_page = html.Div([
     dcc.Graph(id="customer_prosumption-imbalance")
 ], className="container")
 
+
 @app.callback(Output('customer_prosumption', 'figure'),
               [Input('customer_selection', 'value'), Input('game_id', 'value'), Input('proximity', 'value')])
 def update_graph(selected_dropdown_value, game_id, proximity):
     df_customer_prosumption_prediction = db.load_predictions('prediction', game_id, 'customer', 'prosumption')
-    df_customer_prosumption_prediction = df_customer_prosumption_prediction[df_customer_prosumption_prediction['proximity'] == proximity]
+    df_customer_prosumption_prediction = df_customer_prosumption_prediction[
+        df_customer_prosumption_prediction['proximity'] == proximity]
 
     if selected_dropdown_value == 'all':
         dff = df_all[df_all['gameId'] == game_id]
@@ -379,6 +384,7 @@ def update_graph(selected_dropdown_value, game_id, proximity):
         }
     }
 
+
 @app.callback(Output('customer_prosumption-imbalance', 'figure'),
               [Input('customer_selection', 'value'), Input('game_id', 'value'), Input('proximity', 'value')])
 def update_graph(selected_dropdown_value, game_id, proximity):
@@ -388,12 +394,16 @@ def update_graph(selected_dropdown_value, game_id, proximity):
     df_grid_imbalance_pred['strategic_imbalance'] = df_grid_imbalance_pred['imb_prediction'] * -1
 
     df_customer_prosumption_prediction = db.load_predictions('prediction', game_id, 'customer', 'prosumption')
-    df_customer_prosumption_prediction = df_customer_prosumption_prediction[df_customer_prosumption_prediction['proximity'] == proximity]
+    df_customer_prosumption_prediction = df_customer_prosumption_prediction[
+        df_customer_prosumption_prediction['proximity'] == proximity]
     df_customer_prosumption_prediction.rename(columns={'prediction': 'cpros_prediction'}, inplace=True)
 
-    df_imb_and_prosumption = df_grid_imbalance_pred.merge(df_customer_prosumption_prediction, how='left', on='target_timeslot')
-    df_imb_and_prosumption['wholesalebid'] = -df_imb_and_prosumption['cpros_prediction'] + df_imb_and_prosumption['imb_prediction'] * 0.3
-    df_imb_and_prosumption = df_imb_and_prosumption[['target_timeslot', 'cpros_prediction', 'imb_prediction', 'wholesalebid']]
+    df_imb_and_prosumption = df_grid_imbalance_pred.merge(df_customer_prosumption_prediction, how='left',
+                                                          on='target_timeslot')
+    df_imb_and_prosumption['wholesalebid'] = -df_imb_and_prosumption['cpros_prediction'] + df_imb_and_prosumption[
+                                                                                               'imb_prediction'] * 0.3
+    df_imb_and_prosumption = df_imb_and_prosumption[
+        ['target_timeslot', 'cpros_prediction', 'imb_prediction', 'wholesalebid']]
     print(df_grid_imbalance_pred.head())
     print(df_customer_prosumption_prediction.head())
     print(df_imb_and_prosumption[df_imb_and_prosumption['target_timeslot'] > 962].head())
@@ -447,8 +457,6 @@ def update_graph(selected_dropdown_value, game_id, proximity):
             }
         }
     }
-
-
 
 
 if __name__ == '__main__':
