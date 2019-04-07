@@ -86,6 +86,10 @@ visualize_multiple_games: visualize_log_files_multiple_games visualize_database_
 visualize_powertac_2018_log_files:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No --combine_game_ids '2018'
 
+## start dashboard
+start_dash_board:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/dash/wholesale_market.py
+
 ## create data directories
 data_dir:
 	mkdir data
