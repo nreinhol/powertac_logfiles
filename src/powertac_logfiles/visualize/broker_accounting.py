@@ -4,13 +4,14 @@ import seaborn as sns
 
 from powertac_logfiles import data, visualize
 
-def visualize_broker_accounting(combine_game_ids=None, box_plot=False):
+def visualize_broker_accounting(combine_game_ids=None, combine=True, box_plot=False):
     files_to_consider = visualize.get_relevant_file_paths('BrokerAccounting', combine_game_ids)
 
-    if combine_game_ids == '':
+    if not combine:
         for file_name in files_to_consider:
             df_broker_accounting_transformed_grouped = create_dataframe_for_single_brokeraccounting(file_name)
-            plot_broker_accounting(df_broker_accounting_transformed_grouped, file_name)
+            game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
+            plot_broker_accounting_combined_games(False, game_id + iteration, df_broker_accounting_transformed_grouped)
     else:
         results = []
 
