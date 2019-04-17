@@ -19,7 +19,7 @@ def choose_option(database, combine_game_ids):
         for game_id in game_ids:
             print('start plotting for game id: {}'.format(game_id))
             visualize.db_visualize_grid_prosumption_prediction(game_id)
-            visualize.db_visualize_wholesale_price_intervals(game_id)
+            # visualize.db_visualize_wholesale_price_intervals(game_id)
             visualize.db_visualize_customer_prosumption_prediction(game_id)
             visualize.db_visualize_grid_imbalance_prediction(game_id)
             visualize.plot_imbalance_database(game_id)
@@ -34,7 +34,7 @@ def choose_option(database, combine_game_ids):
         # visualize.plot_balancing_transactions(combine_game_ids)
         # visualize.visualize_capacity_transactions(combine_game_ids)
     else:
-        # visualize.visualize_broker_accounting(combine_game_ids, combine=False)
+        visualize.visualize_broker_accounting(combine_game_ids, combine=False)
         visualize.visualize_broker_accounting(combine_game_ids)
         visualize.visualize_tariff_mkt_share(combine_game_ids)
         visualize.visualize_imbalance(combine_game_ids)
