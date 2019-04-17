@@ -220,8 +220,8 @@ def update_graph_wholesale_orders(proximity_value, game_id_value):
             ) for i in dff.proximity.unique()
         ],
         'layout': go.Layout(
-            xaxis={'type': 'linear', 'title': 'mktPrice'},
-            yaxis={'title': 'mktQty'},
+            xaxis={'type': 'linear', 'title': 'mktQty'},
+            yaxis={'title': 'mktPrice'},
             margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
             legend={'x': 0, 'y': 1},
             hovermode='closest'
