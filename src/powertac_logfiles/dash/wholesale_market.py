@@ -47,7 +47,7 @@ dcc._js_dist[0]['external_url'] = 'https://cdn.plot.ly/plotly-basic-latest.min.j
 ####################################################
 
 
-def generate_table(dataframe, max_rows=100):
+def generate_table(dataframe, max_rows=10000):
     return html.Table(
         # Header
         [html.Tr([html.Th(col) for col in dataframe.columns])] +
@@ -233,8 +233,6 @@ def update_graph_wholesale_orders(proximity_value, game_id_value):
               [Input('dropdown-proximity', 'value'), Input('dropdown-game-id', 'value')])
 def update_graph_cleared_trades(proximity_value, game_id_value):
     dff = df_cleared_trades[df_cleared_trades['gameId'] == game_id_value]
-    # dff = dff[dff['proximity'] == proximity_value]
-    # dff = df_order_submits[df_order_submits['proximity'] == proximity_value]
 
     return {
         'data': [
@@ -404,9 +402,6 @@ def update_graph(selected_dropdown_value, game_id, proximity):
                                                                                                'imb_prediction'] * 0.3
     df_imb_and_prosumption = df_imb_and_prosumption[
         ['target_timeslot', 'cpros_prediction', 'imb_prediction', 'wholesalebid']]
-    print(df_grid_imbalance_pred.head())
-    print(df_customer_prosumption_prediction.head())
-    print(df_imb_and_prosumption[df_imb_and_prosumption['target_timeslot'] > 962].head())
 
     df_EWIIS3_imbalance = db.load_balancing_transactions()
     df_EWIIS3_imbalance = df_EWIIS3_imbalance[df_EWIIS3_imbalance["gameId"] == game_id]
