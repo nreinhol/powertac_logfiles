@@ -13,7 +13,7 @@ def choose_option(database, combine_game_ids):
     #   visualize.create_dir_if_not_exists('{}/{}'.format(OUTPUT_DIR, combine_game_ids))
 
     if database == 'Yes':
-        game_ids = data.load_all_game_ids()
+        game_ids = data.load_all_gameIds()
 
         # visualize per game:
         for game_id in game_ids:

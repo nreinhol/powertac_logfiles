@@ -67,6 +67,10 @@ powertac_logfiles:
 visualize_log_files:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No
 
+## make database checks
+database_check:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/data/database_check.py
+
 ## visualize broker performence
 visualize_database:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database Yes

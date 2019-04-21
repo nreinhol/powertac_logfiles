@@ -10,6 +10,8 @@ import os
 
 import ewiis3DatabaseConnector as db
 
+from powertac_logfiles.dash.data_service import DataService
+
 server = flask.Flask('app')
 server.secret_key = os.environ.get('secret_key', 'secret')
 
@@ -42,6 +44,11 @@ app.scripts.config.serve_locally = False
 dcc._js_dist[0]['external_url'] = 'https://cdn.plot.ly/plotly-basic-latest.min.js'
 
 
+dataService = DataService()
+dataService.load_raw_data_and_process()
+df_tariff_transactions_prod_con = dataService.df_tariff_transactions_prod_con
+
+
 ####################################################
 #### Tariff Page
 ####################################################
@@ -59,6 +66,53 @@ def generate_table(dataframe, max_rows=10000):
     )
 
 
+# returns pie chart that shows lead source repartition
+def kWhPerPowerType(df):
+    types = df["powerType"].unique().tolist()
+    values = df["kWh"].unique().tolist()
+
+    trace = go.Pie(
+        labels=types,
+        values=values,
+        marker={"colors": ["#264e86", "#0074e4", "#74dbef", "#eff0f4"]},
+    )
+
+    layout = dict(margin=dict(l=15, r=10, t=0, b=65), legend=dict(orientation="h"))
+    return dict(data=[trace], layout=layout)
+
+@app.callback(
+    Output("kWhPerPowerType", "figure"),
+    [Input("dropdown-game-id", "value")],
+)
+def kWhPerPowerType_callback(game_id):
+    df = dataService.create_total_powertype_prosumption_per_gameId(game_id)
+    return kWhPerPowerType(df)
+
+# returns pie chart that shows lead source repartition
+def kWhPerCustomer(df):
+    df = df.iloc[:10, :]
+    print(df)
+    types = df["customerName"].unique().tolist()
+    values = df["kWh"].unique().tolist()
+
+    trace = go.Pie(
+        labels=types,
+        values=values,
+        marker={"colors": ["#264e86", "#0074e4", "#74dbef", "#eff0f4"]},
+    )
+
+    layout = dict(margin=dict(l=15, r=10, t=0, b=65), legend=dict(orientation="h"))
+    return dict(data=[trace], layout=layout)
+
+@app.callback(
+    Output("kWhPerCustomer", "figure"),
+    [Input("dropdown-game-id", "value")],
+)
+def kWhPerPowerType_callback(game_id):
+    df = dataService.create_total_production_per_customer_and_gameId(game_id)
+    return kWhPerCustomer(df)
+
+
 tariff_page = html.Div([
     dcc.Link('Go to Wholesale Market', href='/page-2'),
     dcc.Link('Go to Customer Analysis', href='/page-3'),
@@ -68,6 +122,30 @@ tariff_page = html.Div([
         options=[{'label': i, 'value': i} for i in df_tariff_subscriptions_shares['gameId'].unique()],
         value=df_tariff_subscriptions_shares['gameId'].values[0]
     ),
+    html.Div([
+        html.Div(
+            [
+                html.P("kWhPerPowerType"),
+                dcc.Graph(
+                    id="kWhPerPowerType",
+                    style={"height": "90%", "width": "98%"},
+                    config=dict(displayModeBar=False),
+                )
+            ],
+            className="four columns chart_div"
+        ),
+        html.Div(
+            [
+                html.P("kWhPerCustomer"),
+                dcc.Graph(
+                    id="kWhPerCustomer",
+                    style={"height": "90%", "width": "98%"},
+                    config=dict(displayModeBar=False),
+                )
+            ],
+            className="four columns chart_div"
+        )
+    ]),
     html.H1('Tariff market share'),
     dcc.Graph(id='tariff-share'),
     html.H1('All offered tariffs'),
@@ -258,9 +336,6 @@ def update_graph_cleared_trades(proximity_value, game_id_value):
     }
 
 
-df_tariff_transactions = db.load_tariff_transactions()
-allow = ['PRODUCE', 'CONSUME']
-df_tariff_transactions_prod_con = df_tariff_transactions[df_tariff_transactions['txType'].isin(allow)]
 
 # df['kWh_per_customer'] = df['kWh'] / df['currentSubscribedPopulation']
 # df_tariff_transactions_prod_con['kWhPerCustomer'] = df_tariff_transactions_prod_con['kWh'] / df_tariff_transactions_prod_con['currentSubscribedPopulation']
