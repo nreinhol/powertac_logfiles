@@ -33,7 +33,7 @@ def make_log_files(local=True):
             mvn_cmd_list.append(b.create_mvn_command(value, input_file, output_file))
 
         # Execute mvn commands through thread pool
-        pool = ThreadPool(1)
+        pool = ThreadPool(2)
         for _ in tqdm(pool.imap_unordered(b.execute_logtool, mvn_cmd_list), total=len(mvn_cmd_list), ncols=85, desc='└── creating log-files'):
             pass
         pool.close()
@@ -42,13 +42,25 @@ def make_log_files(local=True):
 
 def make_web_log_files():
     for index, game_number in enumerate(b.GAME_NUMBERS):
+        try:
+            index += 1  # beautify index for output
+
+            # Clean file dirs
+            data.clean_file_dir(data.RAW_DATA_PATH)
+            data.clean_file_dir(data.WEB_LOG_DATA_PATH)
+
+            # Download and extract
+            data.prepare_web_data(index, game_number)
+
+            make_log_files(local=False)
+        except Exception as e:
+            print('Error occured making log file')
+
+def make_web_boot_files():
+    # Clean file dirs
+    data.clean_file_dir(data.BOOTSTRAP_DATA_DIR)
+
+    for index, game_number in enumerate(b.GAME_NUMBERS):
         index += 1  # beautify index for output
-
-        # Clean file dirs
-        data.clean_file_dir(data.RAW_DATA_PATH)
-        data.clean_file_dir(data.WEB_LOG_DATA_PATH)
-
-        # Download and extract
-        data.prepare_web_data(index, game_number)
-
-        make_log_files(local=False)
+        # Download
+        data.download_boot_data(index, game_number)

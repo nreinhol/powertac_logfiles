@@ -20,8 +20,8 @@ def create_mvn_parameter(log_file, key, local=True):
 def create_mvn_command(value, input_file, output_file):
     try:
         optional_build_args = ''
-        #if value.find('BrokerAccounting') > -1:
-            # optional_build_args = ' --per-broker]'
+        if value.find('TariffAnalysis') > -1:
+            optional_build_args = ' --profile'
 
         mvn_command = 'mvn -f {} exec:exec -Dexec.args="{}{} {} {}" '.format(
             data.LOGTOOL_PATH,  # path to powertac logtool
@@ -30,7 +30,6 @@ def create_mvn_command(value, input_file, output_file):
             input_file,  # the state file
             output_file  # the csv file
         )
-
         return mvn_command
     except ValueError as error:
         print(error)

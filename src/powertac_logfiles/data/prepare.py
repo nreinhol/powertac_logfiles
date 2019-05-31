@@ -11,6 +11,14 @@ def prepare_web_data(index, game_number):
     data.extract_tarfile(file_name_)
 
 
+def download_boot_data(index, game_number):
+    # Create variables
+    file_name_ = data.BOOT_FILE_NAME + str(game_number) + data.BOOT_FILE_TYPE
+    url = data.BOOT_URL + file_name_
+    # Get and prepare state / trace file
+    data.get_file_from_url(index, url, file_name_, data.BOOTSTRAP_DATA_DIR)
+
+
 def filter_on_produce_and_consume(df_tariff_transactions):
     filter_tx_type = ['CONSUME', 'PRODUCE']
     df_tariff_transactions = df_tariff_transactions[df_tariff_transactions['txType'].isin(filter_tx_type)]

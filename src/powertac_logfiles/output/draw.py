@@ -43,8 +43,8 @@ def print_cli_intro():
     c.secho('choose between option [a] and [b]')
     c.secho('├── [a]: process your local log-files')
     c.secho('├── [b]: process the final log-files from web')
-    c.secho('└── [c]: show info\n')
-    c.secho('└── [d]: download data from database\n')
+    c.secho('└── [c]: show info')
+    c.secho('└── [d]: download bootstrap data\n')
 
 
 def print_no_file_found():
