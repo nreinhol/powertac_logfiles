@@ -28,6 +28,7 @@ from .prediction_grid_prosumption import db_visualize_grid_prosumption_predictio
 from .prediction_grid_imbalance import db_visualize_grid_imbalance_prediction  # noqa
 from .prediction_customer_prosumption import db_visualize_customer_prosumption_prediction  # noqa
 from .prediction_wholesale_price_intervals import db_visualize_wholesale_price_intervals  # noqa
+from .tariffAnalysis import visualize_tariff_analysis  # noqa
 
 FIGSIZE_LANDSCAPE = (40, 30)  # (width, height) in 100 px
 FIGSIZE_LANDSCAPE_LARGE = (80, 20)  # (width, height) in 100 px
