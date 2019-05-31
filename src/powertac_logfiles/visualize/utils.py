@@ -8,8 +8,10 @@ from sklearn.metrics import mean_absolute_error
 from powertac_logfiles.data import OUTPUT_DIR
 from powertac_logfiles import data
 
-def get_game_id_from_logfile_name(filename):
-    result = re.search(r"powertac-sim-(.*)(\d)\_([^_]*)\.csv", filename)
+def get_game_id_from_logfile_name(filename, prefix=None):
+    if not prefix:
+        prefix = "powertac-sim-"
+    result = re.search(r"{}(.*)(\d)\_([^_]*)\.csv".format(prefix), filename)
     game_id = result.group(1)
     iteration = result.group(2)
     file_type = result.group(3)
