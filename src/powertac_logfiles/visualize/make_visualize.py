@@ -34,14 +34,15 @@ def choose_option(database, combine_game_ids):
         # visualize.plot_balancing_transactions(combine_game_ids)
         # visualize.visualize_capacity_transactions(combine_game_ids)
     else:
-        visualize.visualize_broker_accounting(combine_game_ids, combine=False)
+        visualize.visualize_tariff_analysis(combine_game_ids)
+        # visualize.visualize_broker_accounting(combine_game_ids, combine=False)
         visualize.visualize_broker_accounting(combine_game_ids)
-        visualize.visualize_tariff_mkt_share(combine_game_ids)
-        visualize.visualize_imbalance(combine_game_ids)
-        visualize.visualize_customer_stats(combine_game_ids)
-        visualize.visualize_total_costs(combine_game_ids)
-        visualize.visualize_cleared_trades()  # for each individual game
-        visualize.visualize_cleared_trades(combine_game_ids)  # over all games
+        # visualize.visualize_total_costs(combine_game_ids)
+        # visualize.visualize_tariff_mkt_share(combine_game_ids) # requires db
+        # visualize.visualize_imbalance(combine_game_ids) # requires db
+        # visualize.visualize_customer_stats(combine_game_ids)
+        # visualize.visualize_cleared_trades()  # for each individual game
+        # visualize.visualize_cleared_trades(combine_game_ids)  # over all games
 
 
 def main():
