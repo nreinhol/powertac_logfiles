@@ -28,14 +28,19 @@ class DataService():
         self.df_tariff_transactions_prod_con = self.df_tariff_transactions[self.df_tariff_transactions['txType'].isin(allow)]
 
     def create_total_powertype_prosumption_per_gameId(self, game_id):
-        df_powerType_prosumption_per_gameId = self.df_tariff_transactions_prod_con[self.df_tariff_transactions_prod_con['gameId'] == game_id]
+        if not game_id == 'all':
+            df_powerType_prosumption_per_gameId = self.df_tariff_transactions_prod_con[self.df_tariff_transactions_prod_con['gameId'] == game_id]
+        else:
+            df_powerType_prosumption_per_gameId = self.df_tariff_transactions_prod_con
         df_powerType_prosumption_per_gameId = df_powerType_prosumption_per_gameId[['brokerName', 'kWh', 'powerType']].groupby(by=['brokerName', 'powerType'], as_index=False).sum()
         df_powerType_prosumption_per_gameId['kWh'] = abs(df_powerType_prosumption_per_gameId['kWh'])
         return df_powerType_prosumption_per_gameId
 
     def create_total_production_per_customer_and_gameId(self, game_id):
-        df_powerType_prosumption_per_gameId = self.df_tariff_transactions_prod_con[
-            self.df_tariff_transactions_prod_con['gameId'] == game_id]
+        if not game_id == 'all':
+            df_powerType_prosumption_per_gameId = self.df_tariff_transactions_prod_con[self.df_tariff_transactions_prod_con['gameId'] == game_id]
+        else:
+            df_powerType_prosumption_per_gameId = self.df_tariff_transactions_prod_con
         df_powerType_prosumption_per_gameId = df_powerType_prosumption_per_gameId[
             ['brokerName', 'kWh', 'customerName']].groupby(by=['brokerName', 'customerName'],
                                                                   as_index=False).sum()

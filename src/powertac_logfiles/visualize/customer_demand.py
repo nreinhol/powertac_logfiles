@@ -2,10 +2,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from powertac_logfiles import data, visualize
+import ewiis3DatabaseConnector as db
 
 
 def visualize_customer_demand(combine_game_ids):
-    df_tariff_transactions = data.load_tariff_transactions()
+    df_tariff_transactions = db.load_tariff_transactions()
     df_tariff_transactions = data.filter_on_produce_and_consume(df_tariff_transactions)
 
     if df_tariff_transactions.empty:
@@ -43,7 +44,7 @@ def plot_total_demand(df_tariff_transactions, game_suffix):
     ax2.set_title("Total Consumption in kWh")
     ax2 = sns.lineplot(ax=ax2, x="postedTimeslotIndex", y="kWh", data=df_grouped, label='EWIIS3 Consumption', color='orange')
 
-    df_distribution_reports = data.load_distribution_reports()
+    df_distribution_reports = db.load_distribution_reports()
     df_plot = df_distribution_reports.drop('gameId', 1).melt(id_vars=['balanceReportId', 'timeslot'], var_name='type', value_name='kWh')
     df_all_production_plot = df_plot[df_plot['type'] == 'totalProduction']
     ax2 = sns.lineplot(ax=ax2, x="timeslot", y="kWh", data=df_all_production_plot, label='total grid Customers Production', color='#e8483b')

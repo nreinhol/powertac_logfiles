@@ -15,7 +15,8 @@ from powertac_logfiles.dash.data_service import DataService
 server = flask.Flask('app')
 server.secret_key = os.environ.get('secret_key', 'secret')
 
-df_order_submits = db.load_order_submits()
+# df_order_submits = db.load_order_submits()
+df_order_submits = pd.DataFrame(columns=['targetTimeslot', 'timeslotIndex'])
 df_cleared_trades = db.load_full_table_cleared_trades()
 df_order_submits['proximity'] = df_order_submits['targetTimeslot'] - df_order_submits['timeslotIndex']
 
@@ -119,8 +120,8 @@ tariff_page = html.Div([
     html.Br(),
     dcc.Dropdown(
         id='dropdown-game-id',
-        options=[{'label': i, 'value': i} for i in df_tariff_subscriptions_shares['gameId'].unique()],
-        value=df_tariff_subscriptions_shares['gameId'].values[0]
+        options=[{'label': i, 'value': i} for i in df_tariff_subscriptions_shares['gameId'].unique()] + [{'label': 'all', 'value': 'all'}],
+        value='all'
     ),
     html.Div([
         html.Div(

@@ -29,8 +29,13 @@ from .prediction_grid_imbalance import db_visualize_grid_imbalance_prediction  #
 from .prediction_customer_prosumption import db_visualize_customer_prosumption_prediction  # noqa
 from .prediction_wholesale_price_intervals import db_visualize_wholesale_price_intervals  # noqa
 from .tariffAnalysis import visualize_tariff_analysis  # noqa
+from .capacity_cost_analysis import visualize_capacity_cost_analysis  # noqa
+from .performance_development import visualize_performance_development  # noqa
+from .visualize_broker_portfolio_balance import visualize_broker_portfolio_imbalance_and_capacity_costs  # noqa
+from .portfolio_demand import visualize_portfolio_demand  # noqa
 
 FIGSIZE_LANDSCAPE = (40, 30)  # (width, height) in 100 px
+FIGSIZE_LANDSCAPE_THIN = (40, 20)  # (width, height) in 100 px
 FIGSIZE_LANDSCAPE_LARGE = (80, 20)  # (width, height) in 100 px
 FIGSIZE_PORTRAIT = (30, 40)  # (width, height) in 100 px
 FIGSIZE_PORTRAIT_LARGE = (30, 60)  # (width, height) in 100 px

@@ -34,7 +34,7 @@ def plot_broker_accounting_combined_games(box_plot, combine_game_ids, df_for_box
     # plt.title('Broker Performance Drivers', fontsize=visualize.FIGURE_TITLE_FONT_SIZE)
     plot_type = ''
     if box_plot:
-        g = sns.boxplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot)
+        g = sns.boxplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, showfliers=False)
         plot_type = 'boxplot'
     else:
         g = sns.swarmplot(ax=ax1, x="performance_driver", y="value", hue='broker', data=df_for_boxplot, size=visualize.MARKER_SIZE_OF_SWARMPLOT)
@@ -59,13 +59,13 @@ def plot_broker_accounting(df_broker_accounting_transformed_grouped, file_name):
                       data=df_broker_accounting_transformed_grouped)
     g.set_xticklabels(g.get_xticklabels(), rotation=90, fontsize=12)
     fig.tight_layout()
-    game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
+    game_id, iteration = visualize.get_game_id_from_logfile_name(file_name, prefix="trial")
     print("Successfully created performance drivers plot.")
     plt.savefig(visualize.create_path_for_plot('BrokerAccountings', '', game_id + iteration, subfolder='general'), bbox_inches="tight")
 
 
 def create_dataframe_for_single_brokeraccounting(file_name):
-    df_broker_accounting = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=';', decimal=',')
+    df_broker_accounting = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=';', decimal='.')
     rename_columns = {'ts': 'timeslot',
                       'dow': 'day_of_week',
                       'hod': 'hour_of_day',

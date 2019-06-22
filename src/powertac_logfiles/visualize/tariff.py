@@ -15,7 +15,23 @@ def visualize_tariff_mkt_share(combine_game_ids):
         results.append(create_dataframe_for_single_tariffMktShare(file_name))
 
     df_plot_tariffMktShare_combined = pd.concat(results, ignore_index=True)
-    plot_tariff_mkt_share(df_plot_tariffMktShare_combined, combine_game_ids)
+    plot_simple_log_file_share(df_plot_tariffMktShare_combined, combine_game_ids)
+
+
+def plot_simple_log_file_share(dff, game_suffix):
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_PORTRAIT)
+
+    ax1 = fig.add_subplot(311)
+    ax1.set_title("Tariff Market Share")
+    ax1 = sns.lineplot(ax=ax1, x="ts", y="tariff_subscriptions", hue="broker", data=dff)
+
+    ax1.legend(markerscale=visualize.MARKER_SCALE)
+
+    fig.tight_layout()
+    plt.savefig(visualize.create_path_for_plot('TariffMktShare', '', game_suffix, subfolder='tariffs'))
+    print("Successfully created tariff market share plot.")
 
 
 def plot_tariff_mkt_share(df_tariff_mkt_share_transformed, game_suffix):
@@ -50,8 +66,8 @@ def plot_tariff_mkt_share(df_tariff_mkt_share_transformed, game_suffix):
 
 
 def create_dataframe_for_single_tariffMktShare(file_name):
-    df_tariff_mkt_share = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=';', decimal=',')
-    df_tariff_mkt_share = df_tariff_mkt_share.drop(['total'], 1)
+    df_tariff_mkt_share = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=',', decimal='.')
+    # df_tariff_mkt_share = df_tariff_mkt_share.drop(['total'], 1)
     df_tariff_mkt_share_transformed = df_tariff_mkt_share.melt(id_vars=['ts'], var_name='broker',
                                                                value_name='tariff_subscriptions')
     return df_tariff_mkt_share_transformed

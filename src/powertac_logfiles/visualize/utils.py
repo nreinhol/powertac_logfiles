@@ -11,7 +11,7 @@ from powertac_logfiles import data
 def get_game_id_from_logfile_name(filename, prefix=None):
     if not prefix:
         prefix = "powertac-sim-"
-    result = re.search(r"{}(.*)(\d)\_([^_]*)\.csv".format(prefix), filename)
+    result = re.search(r"{}(.*)\_(\d*)\_([^_]*)\.csv".format(prefix), filename)
     game_id = result.group(1)
     iteration = result.group(2)
     file_type = result.group(3)

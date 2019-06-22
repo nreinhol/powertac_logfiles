@@ -11,14 +11,14 @@ def visualize_total_costs(combine_game_ids):
 
     if combine_game_ids == '':
         for file_name in files_to_consider:
-            df_costs = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=';', decimal=',', skiprows=1)
+            df_costs = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=';', decimal='.', skiprows=1)
             game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
             plot_total_costs(df_costs, game_id + iteration)
     else:
         results = []
         for file in files_to_consider:
             print('consider imbalance cost files: {}'.format(file))
-            results.append(pd.read_csv(data.PROCESSED_DATA_PATH + file, sep=';', decimal=',', skiprows=1))
+            results.append(pd.read_csv(data.PROCESSED_DATA_PATH + file, sep=';', decimal='.', skiprows=1))
         df_for_total_costs_plot = pd.concat(results, ignore_index=True)
         plot_total_costs(df_for_total_costs_plot, combine_game_ids)
 

@@ -11,6 +11,7 @@ from pathlib import Path  # noqa
 # General Constants
 PROJECT_DIR = str(Path(__file__).resolve().parents[3])
 POWERTAC_DIR = str(Path(__file__).resolve().parents[4])
+BROKER_DIR = '{}/ewiis3/log/'.format(POWERTAC_DIR)
 DATA_DIR = PROJECT_DIR + '/data/'
 BOOTSTRAP_DATA_DIR = DATA_DIR + 'bootstrap/'
 PROCESSED_DATA_PATH = DATA_DIR + 'processed/'

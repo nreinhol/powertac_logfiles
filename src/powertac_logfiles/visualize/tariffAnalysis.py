@@ -36,8 +36,8 @@ def create_dataframe_for_single_tariff_analysis(filename):
             tariff['minRate'] = rates.min()
             tariff['maxRate'] = rates.max()
             tariff['avgRate'] = rates.mean()
-            tariff['ratePeriodicRatio'] = tariff['periodic'] / tariff['avgRate']
-
+            tariff['rPRatio'] = tariff['periodic'] / tariff['avgRate']
+            tariff['minDuration'] = tariff['minDuration'] / (60*60*1000)  # convert to hours
             tariff_specs.append(tariff)
         except Exception as e :
             print("can not read line\n{}".format(line))
@@ -48,7 +48,7 @@ def create_dataframe_for_single_tariff_analysis(filename):
 def plot(df_tariff_specs):
 
     for powerType in df_tariff_specs['powerType'].unique():
-        # dff = df_tariff_specs[df_tariff_specs['powerType'] == powerType][['broker', 'avgRate', 'ratePeriodicRatio', 'periodic']]
+        # dff = df_tariff_specs[df_tariff_specs['powerType'] == powerType][['broker', 'avgRate', 'rPRatio', 'periodic']]
         # dff = dff.melt(id_vars=['broker'], var_name='attribute', value_name='value')
         dff = df_tariff_specs[df_tariff_specs['powerType'] == powerType]
         sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
@@ -59,7 +59,7 @@ def plot(df_tariff_specs):
         ax1 = fig.add_subplot(612)
         ax1 = sns.boxplot(ax=ax1, x="broker", y="periodic", data=dff, showfliers=False)
         ax1 = fig.add_subplot(613)
-        ax1 = sns.boxplot(ax=ax1, x="broker", y="ratePeriodicRatio", data=dff, showfliers=False)
+        ax1 = sns.boxplot(ax=ax1, x="broker", y="rPRatio", data=dff, showfliers=False)
         ax1 = fig.add_subplot(614)
         ax1 = sns.boxplot(ax=ax1, x="broker", y="signup", data=dff, showfliers=False)
         ax1 = fig.add_subplot(615)
@@ -72,7 +72,7 @@ def plot(df_tariff_specs):
 
 
 def calculateDescriptiveStatistics(df_tariff_specs):
-    dff = df_tariff_specs[['broker', 'powerType', 'minDuration', 'signup', 'ratePeriodicRatio', 'periodic', 'avgRate', 'numRates']].groupby(by=['broker', 'powerType'], as_index=False).mean().sort_values(['powerType', 'broker'])
+    dff = df_tariff_specs[['broker', 'powerType', 'minDuration', 'signup', 'rPRatio', 'periodic', 'avgRate', 'numRates']].groupby(by=['broker', 'powerType'], as_index=False).mean().sort_values(['powerType', 'broker'])
     dff_count = df_tariff_specs[['broker', 'powerType', 'minDuration']].groupby(by=['broker', 'powerType'], as_index=False).count().sort_values(['powerType', 'broker'])
     dff['count'] = dff_count['minDuration']
     file = open("{}/tariff_analysis_table.tex".format(data.OUTPUT_DIR), "w")
@@ -84,7 +84,7 @@ def string_formatter(x):
     return x[:2]
 
 def decimal_formatter(x):
-    return '%1.1f' % x
+    return '%1.2f' % x
 
 def int_formatter(x):
     return '%1.0f' % x

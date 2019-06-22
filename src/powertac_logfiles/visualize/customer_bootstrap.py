@@ -69,6 +69,7 @@ def calculatePeakDemandTimeslots(df_customer_bootstrap_data):
     dff_grid_netUsage = df_customer_bootstrap_data.groupby(by=['timeslot'], as_index=False).sum()
     v = 168
     gamma = 1.5
+    n=3
     peak_demands = []
     for week in range(1, 3):
         dff_grid_netUsage_filter = dff_grid_netUsage[dff_grid_netUsage['timeslot'] <= v*week]
@@ -79,7 +80,8 @@ def calculatePeakDemandTimeslots(df_customer_bootstrap_data):
         dff_grid_netUsage_filter = dff_grid_netUsage_filter[dff_grid_netUsage_filter['timeslot'] > v*(week-1)]
 
         dff_grid_netUsage_filter_peak = dff_grid_netUsage_filter[dff_grid_netUsage_filter['netUsage'] <= z]
-        peak_demands.append(dff_grid_netUsage_filter_peak)
+        dff_grid_netUsage_filter_peak_n = dff_grid_netUsage_filter_peak.sort_values(['netUsage'], ascending=True).head(n)
+        peak_demands.append(dff_grid_netUsage_filter_peak_n)
 
     df_peak_demands = pd.concat(peak_demands, ignore_index=True)
     return df_peak_demands
@@ -101,18 +103,18 @@ def calculatePeakDemandContribution(df_customer_bootstrap_data, df_peak_demands)
 def plot_peak_contribution(df_customer_peak_contribution, gameId):
     sns.set(font_scale=2)
     sns.set_style(style=visualize.FIGURE_STYLE)
-    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_THIN)
 
-    ax1 = fig.add_subplot(211)
+    ax1 = fig.add_subplot(111)
     ax1.set_title("Peak Contribution")
     df_heatmap = df_customer_peak_contribution[['customerName', 'timeslot', 'netUsage']]
     df_heatmap = df_heatmap.pivot(index='customerName', columns='timeslot')['netUsage']
     ax1 = sns.heatmap(ax=ax1, data=df_heatmap, center=0, cmap="PiYG", annot=True)
 
-    ax2 = fig.add_subplot(212)
-    ax2.set_title("Peak Contribution")
-    ax2 = sns.boxplot(ax=ax2, x="customerName", y="netUsage", data=df_customer_peak_contribution)
-    ax2.set_xticklabels(ax2.get_xticklabels(), rotation=90)
+    ## ax2 = fig.add_subplot(212)
+    ## ax2.set_title("Peak Contribution")
+    ## ax2 = sns.boxplot(ax=ax2, x="customerName", y="netUsage", data=df_customer_peak_contribution)
+    ## ax2.set_xticklabels(ax2.get_xticklabels(), rotation=90)
 
     fig.tight_layout()
 
@@ -127,7 +129,7 @@ def plot_peak_demands_of_all_bootstrap_datas(df_all_peak_demand_contributions):
     print(dff_head)
     print(dff_tail)
 
-    fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(aspect="equal"))
+    fig, ax = plt.subplots(figsize=(15, 10), subplot_kw=dict(aspect="equal"))
     labels = dff_head['customerName']
     sizes = -dff_head['netUsage']
     wedges, texts, autotexts = ax.pie(sizes, autopct='%1.1f%%', shadow=False, startangle=90, textprops=dict(color="w"))
@@ -136,14 +138,14 @@ def plot_peak_demands_of_all_bootstrap_datas(df_all_peak_demand_contributions):
               title="Customer",
               loc="center left",
               bbox_to_anchor=(1, 0, 0.5, 1))
-    plt.setp(autotexts, size=14, weight="bold")
+    plt.setp(autotexts, size=18, weight="bold")
     # ax.set_title("Top 6 Consumer in peak demand timeslots")
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('totalPeakDemandContribution', 'consumer', '', subfolder='bootstrap'))
 
 
 
-    fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(aspect="equal"))
+    fig, ax = plt.subplots(figsize=(15, 10), subplot_kw=dict(aspect="equal"))
     labels = dff_tail['customerName']
     sizes = dff_tail['netUsage']
     wedges, texts, autotexts = ax.pie(sizes, autopct='%1.1f%%', shadow=False, startangle=90, textprops=dict(color="w"))
@@ -163,9 +165,9 @@ def plot_peak_demands_of_all_bootstrap_datas(df_all_peak_demand_contributions):
 
 
 if __name__ == '__main__':
-    bootstrap_files = ["trial_2019_04_1.xml", "trial_2019_04_2.xml"]
 
     bootstrap_files = os.listdir(data.BOOTSTRAP_DATA_DIR)
+    bootstrap_files = ["trial_2019_04_1.xml"]  # , "trial_2019_04_2.xml"]
 
     print(bootstrap_files)
 
@@ -177,10 +179,10 @@ if __name__ == '__main__':
         gameId = bootstrap_file.replace(".xml", "")
         df_customer, df_customer_bootstrap_data = read_data(bootstrap_file)
         df_peak_demands = calculatePeakDemandTimeslots(df_customer_bootstrap_data)
-        # plot_usages(df_customer_bootstrap_data, df_peak_demands, gameId)
+        plot_usages(df_customer_bootstrap_data, df_peak_demands, gameId)
         df_customer_peak_contribution = calculatePeakDemandContribution(df_customer_bootstrap_data, df_peak_demands)
         df_customer_peak_contribution_list.append(df_customer_peak_contribution)
-        # plot_peak_contribution(df_customer_peak_contribution, gameId)
+        plot_peak_contribution(df_customer_peak_contribution, gameId)
 
     df_all_peak_demand_contributions = pd.concat(df_customer_peak_contribution_list, ignore_index=True)
     plot_peak_demands_of_all_bootstrap_datas(df_all_peak_demand_contributions)
