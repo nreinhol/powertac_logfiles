@@ -48,21 +48,31 @@ def plot_usages(df_customer_bootstrap_data, df_peak_demands, gameId):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
+    df_customer_bootstrap_data['powerType'] = df_customer_bootstrap_data.apply(split_consumption_customers, axis=1)
     dff = df_customer_bootstrap_data.groupby(by=['powerType', 'timeslot'], as_index=False).sum()
+    print(dff)
     dff_all = df_customer_bootstrap_data.groupby(by=['timeslot'], as_index=False).sum()
     ax1 = fig.add_subplot(211)
-    ax1.set_title("netUsage of Grid")
+    ax1.set_title("Net Usage of Grid")
     ax1 = sns.lineplot(ax=ax1, x="timeslot", y="netUsage",  data=dff_all)
     ax1 = sns.scatterplot(ax=ax1, x="timeslot", y="netUsage",  data=df_peak_demands, color='red', s=300)
 
     ax1 = fig.add_subplot(212)
-    ax1.set_title("netUsage per PowerType")
+    ax1.set_title("Net Usage per PowerType")
     ax1 = sns.lineplot(ax=ax1, x="timeslot", y="netUsage", hue="powerType", data=dff)
 
     fig.tight_layout()
 
     plt.savefig(visualize.create_path_for_plot('netUsage', '', gameId, subfolder='bootstrap'))
     print("Successfully created netUsage plot.")
+
+
+def split_consumption_customers(row):
+    if row['customerName'] == "BrooksideHomes" or row['customerName'] == "CentervilleHomes":
+        return "RES_CONSUMPTION"
+    else:
+        return row['powerType']
+
 
 
 def calculatePeakDemandTimeslots(df_customer_bootstrap_data):
@@ -167,7 +177,7 @@ def plot_peak_demands_of_all_bootstrap_datas(df_all_peak_demand_contributions):
 if __name__ == '__main__':
 
     bootstrap_files = os.listdir(data.BOOTSTRAP_DATA_DIR)
-    bootstrap_files = ["trial_2019_04_1.xml"]  # , "trial_2019_04_2.xml"]
+    # bootstrap_files = ["trial_2019_04_1.xml"]  # , "trial_2019_04_2.xml"]
 
     print(bootstrap_files)
 
