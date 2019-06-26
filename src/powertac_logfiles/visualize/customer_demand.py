@@ -18,8 +18,9 @@ def visualize_customer_demand(combine_game_ids):
             plot_total_demand(df_tariff_specifications_for_game, game_id)
             plot_total_share(df_tariff_specifications_for_game, game_id)
     else:
-        plot_total_demand(df_tariff_transactions, combine_game_ids)
-        plot_total_share(df_tariff_transactions, combine_game_ids)
+        # plot_total_demand(df_tariff_transactions, combine_game_ids)
+        # plot_total_share(df_tariff_transactions, combine_game_ids)
+        plot_portfolio_demand_and_grid_demand(df_tariff_transactions, combine_game_ids)
 
     # plot_all_customer_demand_curves(df_tariff_transactions)
 
@@ -55,6 +56,38 @@ def plot_total_demand(df_tariff_transactions, game_suffix):
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('consumption_and_production', 'db', game_suffix))
     print('Successfully created total demand plot.')
+
+
+def plot_portfolio_demand_and_grid_demand(df_tariff_transactions, game_suffix):
+    if df_tariff_transactions.empty:
+        print('ERROR: no tariff specification data for game {} stored in db.'.format(game_suffix))
+        return
+
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    sns.set_style(style=visualize.FIGURE_STYLE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_LARGE)
+
+    # fig.suptitle("Imbalance", fontsize=16)
+
+    # df_grouped = df_tariff_transactions[['postedTimeslotIndex', 'kWh', 'gameId', 'powerType']].groupby(by=['postedTimeslotIndex', 'powerType', 'gameId'], as_index=False).sum()
+
+    df_grouped = df_tariff_transactions[['postedTimeslotIndex', 'kWh', 'gameId']].groupby(by=['postedTimeslotIndex', 'gameId'], as_index=False).sum()
+    ax2 = fig.add_subplot(111)
+    # ax2.set_title("Total Consumption in kWh")
+    ax2 = sns.lineplot(ax=ax2, x="postedTimeslotIndex", y="kWh", data=df_grouped, label='Portfolio demand', color='orange')
+
+    df_distribution_reports = db.load_distribution_reports()
+    df_distribution_reports['demand'] = df_distribution_reports['totalProduction'] - df_distribution_reports['totalConsumption']
+    # df_plot = df_distribution_reports.drop('gameId', 1).melt(id_vars=['balanceReportId', 'timeslot'], var_name='type', value_name='kWh')
+    # df_all_production_plot = df_plot[df_plot['type'] == 'totalProduction']
+    ax2 = sns.lineplot(ax=ax2, x="timeslot", y="demand", data=df_distribution_reports, label='Grid demand', color='#e8483b')
+    """df_all_consumption_plot = df_plot[df_plot['type'] == 'totalConsumption']
+    df_all_consumption_plot['kWh'] = -1 * df_all_consumption_plot['kWh']
+    ax2 = sns.lineplot(ax=ax2, x="timeslot", y="kWh", data=df_all_consumption_plot, label='total grid Consumption', color='#14779b')"""
+
+    fig.tight_layout()
+    plt.savefig(visualize.create_path_for_plot('portfolio_and_grid_demand', '', game_suffix, subfolder="portfolio"))
+    print('Successfully created portfolio and grid demand plot.')
 
 
 def plot_total_share(df_tariff_transactions, game_suffix):
