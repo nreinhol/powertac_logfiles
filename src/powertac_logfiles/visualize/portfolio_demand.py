@@ -26,12 +26,15 @@ def visualize_portfolio_demand(combine_game_ids):
 
 
 def plot(df, type, game_id):
+    df.to_csv(data.OUTPUT_DIR+"/portfolio/demand_{}.csv".format(type))
     dff = df.iloc[:10]
+    sns.set(font_scale=1.5)
+    sns.set_style(style=visualize.FIGURE_STYLE)
+
     fig, ax = plt.subplots(figsize=(15, 10), subplot_kw=dict(aspect="equal"))
     labels = dff[type]
     sizes = dff['kWh']
-    print(dff)
-    wedges, texts, autotexts = ax.pie(sizes, autopct='%1.1f%%', shadow=False, startangle=90, textprops=dict(color="w"))
+    wedges, texts, autotexts = ax.pie(sizes, autopct='%1.0f%%', shadow=False, startangle=90, textprops=dict(color="w"), pctdistance=0.8)
 
     ax.legend(wedges, labels,
               title="Portfolio demand",
@@ -39,7 +42,7 @@ def plot(df, type, game_id):
               bbox_to_anchor=(1, 0, 0.5, 1))
     plt.setp(autotexts, size=18, weight="bold")
     # ax.set_title("Top 6 Consumer in peak demand timeslots")
-    fig.tight_layout()
+    # fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('demand', type, game_id, subfolder='portfolio'))
 
 
