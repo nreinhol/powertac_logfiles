@@ -63,6 +63,10 @@ endif
 powertac_logfiles:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/cli/run.py
 
+## bootstrap data
+analyze_customer_bootstrap:
+	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/customer_bootstrap.py
+
 ## visualize broker performence
 visualize_log_files:
 	@$(PYTHON_INTERPRETER) src/$(PROJECT_NAME)/visualize/make_visualize.py --database No

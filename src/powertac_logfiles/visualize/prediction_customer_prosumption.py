@@ -26,10 +26,16 @@ def db_visualize_customer_prosumption_prediction(game_id):
 def plot_prediction(df_customer_prosumption, df_customer_prosumption_prediction, game_id):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
-    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_LARGE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_THIN)
     # fig.suptitle("Imbalance", fontsize=16)
     ax1 = fig.add_subplot(111)
     # ax1.set_title("Customer prosumption prediction")
+    start = 1000
+    end = 1336
+    df_customer_prosumption_prediction = df_customer_prosumption_prediction[df_customer_prosumption_prediction['target_timeslot'] >= start]
+    df_customer_prosumption = df_customer_prosumption[df_customer_prosumption['timeslot'] >= start]
+    df_customer_prosumption_prediction = df_customer_prosumption_prediction[df_customer_prosumption_prediction['target_timeslot'] < end]
+    df_customer_prosumption = df_customer_prosumption[df_customer_prosumption['timeslot'] < end]
     palette = sns.color_palette("Blues_d", n_colors=24)
     ax1 = sns.lineplot(ax=ax1, x="target_timeslot", y="prediction", hue='Proximity',
                        data=df_customer_prosumption_prediction, palette=palette)

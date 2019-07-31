@@ -11,21 +11,22 @@ import ewiis3DatabaseConnector as data
 def choose_option(database, combine_game_ids):
     # if not combine_game_ids == '':
     #   visualize.create_dir_if_not_exists('{}/{}'.format(OUTPUT_DIR, combine_game_ids))
-
+    print('start visualizing with params: database={}, combine_game_ids={}.'.format(database, combine_game_ids))
     if database == 'Yes':
         game_ids = data.load_all_gameIds()
 
         # visualize per game:
-        # for game_id in game_ids:
-            # print('start plotting for game id: {}'.format(game_id))
-            # visualize.db_visualize_grid_prosumption_prediction(game_id)
+        for game_id in game_ids:
+            print('start plotting for game id: {}'.format(game_id))
+            visualize.db_visualize_customer_prosumption_prediction(game_id)
+            visualize.db_visualize_grid_imbalance_prediction(game_id)
             # visualize.db_visualize_wholesale_price_intervals(game_id)
-            # visualize.db_visualize_customer_prosumption_prediction(game_id)
-            # visualize.db_visualize_grid_imbalance_prediction(game_id)
-            # visualize.plot_imbalance_database(game_id)
+            visualize.plot_imbalance_database(game_id)
+            # visualize.db_visualize_grid_prosumption_prediction(game_id)
         # visualize.visualize_tariff_performance(combine_game_ids)
         # visualize.visualize_tariff_specification(combine_game_ids)
 
+        visualize.visualize_customer_demand(combine_game_ids)
         visualize.visualize_portfolio_demand(combine_game_ids)
         # visualize.db_visualize_order_submits(combine_game_ids)
         # visualize.visualize_cleared_trades_from_database(combine_game_ids)
@@ -34,12 +35,13 @@ def choose_option(database, combine_game_ids):
         # visualize.plot_balancing_transactions(combine_game_ids)
         # visualize.visualize_capacity_transactions(combine_game_ids)
     else:
-        visualize.visualize_capacity_cost_analysis(combine_game_ids)
-        visualize.visualize_broker_portfolio_imbalance_and_capacity_costs()
+        """visualize.visualize_broker_accounting_time_graph(combine_game_ids)
         visualize.visualize_performance_development(combine_game_ids)
+        visualize.visualize_capacity_cost_analysis(combine_game_ids)"""
+        visualize.visualize_broker_accounting(combine_game_ids)
+        visualize.visualize_broker_portfolio_imbalance_and_capacity_costs()
         visualize.visualize_tariff_analysis(combine_game_ids)
         visualize.visualize_broker_accounting(combine_game_ids, combine=False)
-        visualize.visualize_broker_accounting(combine_game_ids)
         visualize.visualize_total_costs(combine_game_ids)
         # visualize.visualize_tariff_mkt_share(combine_game_ids) # requires db
         # visualize.visualize_imbalance(combine_game_ids) # requires db

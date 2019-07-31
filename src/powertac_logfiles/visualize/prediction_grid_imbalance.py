@@ -27,7 +27,14 @@ def db_visualize_grid_imbalance_prediction(game_id):
 def plot_prediction(df_balancing_report, df_imbalance_prediction, game_id):
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)
-    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_LARGE)
+    fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_THIN)
+
+    start = 1000
+    end = 1336
+    df_imbalance_prediction = df_imbalance_prediction[df_imbalance_prediction['target_timeslot'] >= start]
+    df_balancing_report = df_balancing_report[df_balancing_report['timeslot'] >= start]
+    df_imbalance_prediction = df_imbalance_prediction[df_imbalance_prediction['target_timeslot'] < end]
+    df_balancing_report = df_balancing_report[df_balancing_report['timeslot'] < end]
 
     max_timeslot = max(df_imbalance_prediction['target_timeslot'])
     min_timeslot = min(df_imbalance_prediction['target_timeslot'])

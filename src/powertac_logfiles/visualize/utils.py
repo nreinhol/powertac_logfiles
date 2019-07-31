@@ -9,6 +9,13 @@ from powertac_logfiles.data import OUTPUT_DIR
 from powertac_logfiles import data
 
 def get_game_id_from_logfile_name(filename, prefix=None):
+    if filename.find('trial_2019_06') > -1:
+        iteration = filename.replace('trial_2019_06_', '').replace('_BrokerAccounting.csv', '')
+        return "trial_2019_06", iteration
+    elif filename.find('finals_2019_07') > -1:
+        iteration = filename.replace('finals_2019_07_', '').replace('_BrokerAccounting.csv', '')
+        return "finals_2019_07", iteration
+
     if not prefix:
         prefix = "powertac-sim-"
     result = re.search(r"{}(.*)\_(\d*)\_([^_]*)\.csv".format(prefix), filename)

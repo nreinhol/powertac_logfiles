@@ -24,11 +24,19 @@ def plot(df_performance_development, combine_game_ids):
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_THIN)
 
     dff = df_performance_development[df_performance_development['broker']=='EWIIS3']
+    rename_columns = {'game_id': 'Episode', 'final_cash': 'Final cash', 'game_size': 'Game size'}
+
+    dff.rename(columns=rename_columns, inplace=True)
+
 
     ax1 = fig.add_subplot(111)
-    ax1 = sns.scatterplot(ax=ax1, x="game_id", y="final_cash", style='game_size', data=dff, s=800)
 
-    ax1.set_title("EWIIS3 performance development")
+    if len(dff['Game size'].unique()) > 1:
+        ax1 = sns.scatterplot(ax=ax1, x="Episode", y="Final cash", style='Game size', data=dff, s=800)
+    else:
+        ax1 = sns.regplot(ax=ax1, x="Episode", y="Final cash", data=dff, scatter_kws={'s': 800})
+
+    # ax1.set_title("EWIIS3 performance development")
     fig.tight_layout()
 
     plt.savefig(visualize.create_path_for_plot('performance_development', '', combine_game_ids, subfolder='general'))
@@ -37,10 +45,7 @@ def plot(df_performance_development, combine_game_ids):
 
 def create_dataframe_for_single_brokeraccounting(file_name):
     df_broker_accounting = pd.read_csv(data.PROCESSED_DATA_PATH + file_name, sep=';', decimal='.')
-    if file_name.find('trial_2019_06') > -1:
-        iteration = file_name.replace('trial_2019_06_', '').replace('_BrokerAccounting.csv', '')
-    else:
-        game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
+    game_id, iteration = visualize.get_game_id_from_logfile_name(file_name)
 
     rename_columns = {'ts': 'timeslot',
                       'dow': 'day_of_week',

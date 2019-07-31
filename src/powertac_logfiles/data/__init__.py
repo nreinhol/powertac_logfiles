@@ -33,6 +33,7 @@ BOOT_FILE_NAME = BOOT_FILE_NAME + '_'
 BOOT_FILE_TYPE = '.xml'
 FILE_NAME = 'PowerTAC_2018_Finals'  # does not exist anymore
 FILE_NAME = 'trial_2019_06'  # use trail2 of 2019
+FILE_NAME = 'finals_2019_07'  # use Finals of 2019
 FILE_NAME_ = FILE_NAME + '_'
 FILE_TYPE = '.tar.gz'
 

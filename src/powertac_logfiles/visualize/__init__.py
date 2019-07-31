@@ -33,6 +33,8 @@ from .capacity_cost_analysis import visualize_capacity_cost_analysis  # noqa
 from .performance_development import visualize_performance_development  # noqa
 from .visualize_broker_portfolio_balance import visualize_broker_portfolio_imbalance_and_capacity_costs  # noqa
 from .portfolio_demand import visualize_portfolio_demand  # noqa
+from .prediction_performance import evaluate_prediction  # noqa
+from .broker_accounting_time_graph import visualize_broker_accounting_time_graph  # noqa
 
 FIGSIZE_LANDSCAPE = (40, 30)  # (width, height) in 100 px
 FIGSIZE_LANDSCAPE_THIN = (40, 20)  # (width, height) in 100 px

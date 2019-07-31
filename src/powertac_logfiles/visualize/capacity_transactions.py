@@ -2,10 +2,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from powertac_logfiles import data, visualize
+import ewiis3DatabaseConnector as db
 
 
 def visualize_capacity_transactions():
-    df_capacity_transactions = data.load_capacity_transactions()
+    df_capacity_transactions = db.load_capacity_transactions()
 
     sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
     sns.set_style(style=visualize.FIGURE_STYLE)

@@ -53,13 +53,17 @@ def plot_usages(df_customer_bootstrap_data, df_peak_demands, gameId):
     print(dff)
     dff_all = df_customer_bootstrap_data.groupby(by=['timeslot'], as_index=False).sum()
     ax1 = fig.add_subplot(211)
-    ax1.set_title("Net Usage of Grid")
+    ax1.set_title("Grid Demand")
     ax1 = sns.lineplot(ax=ax1, x="timeslot", y="netUsage",  data=dff_all)
     ax1 = sns.scatterplot(ax=ax1, x="timeslot", y="netUsage",  data=df_peak_demands, color='red', s=300)
+    ax1.set_xlabel('Timeslot')
+    ax1.set_ylabel('Demand in kWh')
 
-    ax1 = fig.add_subplot(212)
-    ax1.set_title("Net Usage per PowerType")
-    ax1 = sns.lineplot(ax=ax1, x="timeslot", y="netUsage", hue="powerType", data=dff)
+    ax2 = fig.add_subplot(212)
+    ax2.set_title("Demand per Power Type")
+    ax2 = sns.lineplot(ax=ax2, x="timeslot", y="netUsage", hue="powerType", data=dff)
+    ax2.set_xlabel('Timeslot')
+    ax2.set_ylabel('Demand in kWh')
 
     fig.tight_layout()
 
@@ -111,16 +115,18 @@ def calculatePeakDemandContribution(df_customer_bootstrap_data, df_peak_demands)
 
 
 def plot_peak_contribution(df_customer_peak_contribution, gameId):
-    sns.set(font_scale=2)
+    sns.set(font_scale=visualize.FIGURE_FONT_SCALE)
+    # sns.set(font_scale=2)
     sns.set_style(style=visualize.FIGURE_STYLE)
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE_THIN)
 
     ax1 = fig.add_subplot(111)
-    ax1.set_title("Peak Contribution")
+    # ax1.set_title("Peak Contribution")
     df_heatmap = df_customer_peak_contribution[['customerName', 'timeslot', 'netUsage']]
     df_heatmap = df_heatmap.pivot(index='customerName', columns='timeslot')['netUsage']
     ax1 = sns.heatmap(ax=ax1, data=df_heatmap, center=0, cmap="PiYG", annot=True)
-
+    ax1.set_xlabel('Timeslot')
+    ax1.set_ylabel('Customer Name')
     ## ax2 = fig.add_subplot(212)
     ## ax2.set_title("Peak Contribution")
     ## ax2 = sns.boxplot(ax=ax2, x="customerName", y="netUsage", data=df_customer_peak_contribution)
@@ -135,20 +141,23 @@ def plot_peak_contribution(df_customer_peak_contribution, gameId):
 def plot_peak_demands_of_all_bootstrap_datas(df_all_peak_demand_contributions):
     dff = df_all_peak_demand_contributions[['customerName', 'netUsage']].groupby(by="customerName", as_index=False).sum().sort_values('netUsage')
     dff_head = dff.head(6)
-    dff_tail = dff.tail(6)
+    dff_tail = dff.tail(4)
     print(dff_head)
     print(dff_tail)
 
     fig, ax = plt.subplots(figsize=(15, 10), subplot_kw=dict(aspect="equal"))
     labels = dff_head['customerName']
     sizes = -dff_head['netUsage']
-    wedges, texts, autotexts = ax.pie(sizes, autopct='%1.1f%%', shadow=False, startangle=90, textprops=dict(color="w"))
+    wedges, texts, autotexts = ax.pie(sizes, autopct='%1.1f%%', shadow=False, startangle=90, pctdistance=1.25, textprops=dict(color="black"))
 
     ax.legend(wedges, labels,
-              title="Customer",
-              loc="center left",
-              bbox_to_anchor=(1, 0, 0.5, 1))
-    plt.setp(autotexts, size=18, weight="bold")
+              title="Customer Name",
+              loc="upper center",
+              bbox_to_anchor=(0.5, -0.05),
+              ncol=3,
+              prop={'size': 26})
+
+    plt.setp(autotexts, size=26, weight="bold")
     # ax.set_title("Top 6 Consumer in peak demand timeslots")
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('totalPeakDemandContribution', 'consumer', '', subfolder='bootstrap'))
@@ -158,13 +167,15 @@ def plot_peak_demands_of_all_bootstrap_datas(df_all_peak_demand_contributions):
     fig, ax = plt.subplots(figsize=(15, 10), subplot_kw=dict(aspect="equal"))
     labels = dff_tail['customerName']
     sizes = dff_tail['netUsage']
-    wedges, texts, autotexts = ax.pie(sizes, autopct='%1.1f%%', shadow=False, startangle=90, textprops=dict(color="w"))
+    wedges, texts, autotexts = ax.pie(sizes, autopct='%1.1f%%', shadow=False, startangle=90, pctdistance=1.25, textprops=dict(color="black"))
 
     ax.legend(wedges, labels,
-              title="Customer",
-              loc="center left",
-              bbox_to_anchor=(1, 0, 0.5, 1))
-    plt.setp(autotexts, size=14, weight="bold")
+              title="Customer Name",
+              loc="upper center",
+              bbox_to_anchor=(0.5, -0.05),
+              ncol=2,
+              prop={'size': 26})
+    plt.setp(autotexts, size=26, weight="bold")
     # ax.set_title("Top 6 Produces in peak demand timeslots")
     fig.tight_layout()
     plt.savefig(visualize.create_path_for_plot('totalPeakDemandContribution', 'producer', '', subfolder='bootstrap'))

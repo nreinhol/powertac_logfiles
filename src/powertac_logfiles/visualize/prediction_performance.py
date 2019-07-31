@@ -17,10 +17,10 @@ def calculate_prediction_performance(df_prediction):
     df_prediction['Correct sign'] = df_prediction.apply(lambda row: correctly_classified(row), axis=1)
     ae, se, rse, ape = visualize.calculate_all_error_measures(y_true=df_prediction['actual'],
                                                               y_pred=df_prediction['prediction'])
-    df_prediction['ae'] = ae
-    df_prediction['se'] = se
-    df_prediction['rse'] = rse
-    df_prediction['ape'] = ape
+    df_prediction['mae'] = ae
+    df_prediction['mse'] = se
+    df_prediction['rmse'] = rse
+    df_prediction['mape'] = ape
     return df_prediction
 
 
@@ -30,20 +30,20 @@ def plot_prediction_performance(game_id, df_prediction, type, show_outliers=Fals
     fig = plt.figure(figsize=visualize.FIGSIZE_LANDSCAPE)
     # fig.suptitle("Imbalance", fontsize=16)
     ax2 = fig.add_subplot(511)
-    ax2.set_title("Absolut Error")
-    ax2 = sns.boxplot(ax=ax2, x="Proximity", y="ae", data=df_prediction[['Proximity', 'ae']],
+    ax2.set_title("Mean Absolut Error")
+    ax2 = sns.boxplot(ax=ax2, x="Proximity", y="mae", data=df_prediction[['Proximity', 'mae']],
                       showfliers=show_outliers)
     ax3 = fig.add_subplot(512)
-    ax3.set_title("Squared Error")
-    ax3 = sns.boxplot(ax=ax3, x="Proximity", y="se", data=df_prediction[['Proximity', 'se']],
+    ax3.set_title("Mean Squared Error")
+    ax3 = sns.boxplot(ax=ax3, x="Proximity", y="mse", data=df_prediction[['Proximity', 'mse']],
                       showfliers=show_outliers)
     ax4 = fig.add_subplot(513)
-    ax4.set_title("Root Squared Error")
-    ax4 = sns.boxplot(ax=ax4, x="Proximity", y="rse", data=df_prediction[['Proximity', 'rse']],
+    ax4.set_title("Root Mean Squared Error")
+    ax4 = sns.boxplot(ax=ax4, x="Proximity", y="rmse", data=df_prediction[['Proximity', 'rmse']],
                       showfliers=show_outliers)
     ax5 = fig.add_subplot(514)
-    ax5.set_title("Absolut Percentage Error")
-    ax5 = sns.boxplot(ax=ax5, x="Proximity", y="ape", data=df_prediction[['Proximity', 'ape']],
+    ax5.set_title("Mean Absolut Percentage Error")
+    ax5 = sns.boxplot(ax=ax5, x="Proximity", y="mape", data=df_prediction[['Proximity', 'mape']],
                       showfliers=show_outliers)
     ax6 = fig.add_subplot(515)
     ax6.set_title("Correct Sign")

@@ -24,4 +24,4 @@ LOG_FILES = {'TariffAnalysis': 'org.powertac.logtool.example.TariffAnalysis',
              'TariffMktShare': 'org.powertac.logtool.example.TariffMktShare'}
 # LOG_FILES = {'BrokerBalancingActions': 'org.powertac.logtool.example.BrokerBalancingActions'}
 # GAME_NUMBERS = list(np.random.choice(300, 5, replace=False) + 1)
-GAME_NUMBERS = list(range(370, 391))
+GAME_NUMBERS = list(range(1, 500))
